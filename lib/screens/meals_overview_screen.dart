@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:homemade_user/config.dart';
 import 'package:homemade_user/screens/family_details_screen.dart';
 import '../models/families.dart';
 import '../widgets/meals_item.dart';
@@ -100,6 +101,11 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
 
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
+        bottomNavigationBar: Config.buildBottomNavigationBar(
+          mediaQuery: screenSize,
+          context: context,
+        ),
+
       appBar: AppBar(
         leading: IconButton(
             icon: Icon(
@@ -146,90 +152,92 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
       ),
       body: Directionality(
         textDirection: TextDirection.rtl,
-        child: Column(
-          children: [
-            //show image slider
-            Container(
-              height: screenSize.height * 0.2,
-              child: Carousel(
-                
-                boxFit: BoxFit.cover,
-                dotColor: Color(0xffF4AC94).withOpacity(0.8),
-                dotSize: 5.5,
-                dotSpacing: 16.0,
-                dotBgColor: Colors.transparent,
-                showIndicator: true,
-                overlayShadow: true,
-                autoplay: false,
-                images: [
-                  AssetImage("images/food1.jpg"),
-                  AssetImage("images/food2.jpg"),
-                  AssetImage("images/food3.jpg"),
-                  AssetImage("images/food4.jpg"),
-                ],
+        child: SingleChildScrollView(
+                  child: Column(
+            children: [
+              //show image slider
+              Container(
+                height: screenSize.height * 0.2,
+                child: Carousel(
+                  
+                  boxFit: BoxFit.cover,
+                  dotColor: Color(0xffF4AC94).withOpacity(0.8),
+                  dotSize: 5.5,
+                  dotSpacing: 16.0,
+                  dotBgColor: Colors.transparent,
+                  showIndicator: true,
+                  overlayShadow: true,
+                  autoplay: false,
+                  images: [
+                    AssetImage("images/food1.jpg"),
+                    AssetImage("images/food2.jpg"),
+                    AssetImage("images/food3.jpg"),
+                    AssetImage("images/food4.jpg"),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              height: screenSize.height * 0.07,
-              width: screenSize.width,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
-                itemBuilder: (ctx, i) => GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      categoryItem = categories[i];
-                    });
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: categoryItem == categories[i]
-                          ? Color(0xffF4AC94)
-                          : null,
-                    ),
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      categories[i],
-                      style: TextStyle(color: Color(0xff366775)),
+              Container(
+                height: screenSize.height * 0.07,
+                width: screenSize.width,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  itemBuilder: (ctx, i) => GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        categoryItem = categories[i];
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: categoryItem == categories[i]
+                            ? Color(0xffF4AC94)
+                            : null,
+                      ),
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        categories[i],
+                        style: TextStyle(color: Color(0xff366775)),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              height: screenSize.height * 0.61,
-              width: screenSize.width,
-              child: ListView.builder(
-                padding: EdgeInsets.only(
-                  top: 2,
-                  bottom: 3,
-                ),
-                itemCount: editedList.length,
-                itemBuilder: (ctx, i) => InkWell(
-                  splashColor: Color(0xffFCE8E6),
-                  onTap: () {
-                    print('ss');
-                     Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => FamilyDetailsScreen(),
-                          settings: RouteSettings(name: 'name',arguments: editedList[i].name,),
-                          ),
-                          
-                        );
-                  },
-                  child: MealsItem(
-                      shopLogo: editedList[i].imageUrl,
-                      title: editedList[i].name,
-                      category: editedList[i].category,
-                      orderCount: editedList[i].orderCount,
-                      directions: editedList[i].directions,
-                      rating: editedList[i].rating),
+              Container(
+                height: screenSize.height * 0.61,
+                width: screenSize.width,
+                child: ListView.builder(
+                  padding: EdgeInsets.only(
+                    top: 2,
+                    bottom: 3,
+                  ),
+                  itemCount: editedList.length,
+                  itemBuilder: (ctx, i) => InkWell(
+                    splashColor: Color(0xffFCE8E6),
+                    onTap: () {
+                      print('ss');
+                       Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder: (_, __, ___) => FamilyDetailsScreen(),
+                            settings: RouteSettings(name: 'name',arguments: editedList[i].name,),
+                            ),
+                            
+                          );
+                    },
+                    child: MealsItem(
+                        shopLogo: editedList[i].imageUrl,
+                        title: editedList[i].name,
+                        category: editedList[i].category,
+                        orderCount: editedList[i].orderCount,
+                        directions: editedList[i].directions,
+                        rating: editedList[i].rating),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

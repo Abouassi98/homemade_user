@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './screens/splash_screen.dart';
 import './screens/home_screen.dart';
 import './screens/signup_screen.dart';
-import './screens/tab_screen.dart';
+
 import './screens/meals_overview_screen.dart';
 import './screens/family_details_screen.dart';
 
@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SplashScreen(),
+      home: SignupScreen(),
+
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:homemade_user/config.dart';
 import 'package:homemade_user/screens/meals_overview_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -57,7 +58,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
-    return Scaffold(
+    return Scaffold(bottomNavigationBar: Config.buildBottomNavigationBar(
+          mediaQuery: mediaQuery,
+          context: context,
+        ),
       backgroundColor: Colors.white,
       body: Directionality(
         textDirection: TextDirection.rtl,

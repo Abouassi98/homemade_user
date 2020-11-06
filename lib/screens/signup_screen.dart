@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:homemade_user/config.dart';
 import 'package:homemade_user/screens/home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -59,6 +60,10 @@ class _SignupScreenState extends State<SignupScreen> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        bottomNavigationBar: Config.buildBottomNavigationBar(
+          mediaQuery: mediaQuery,
+          isSignup: true,
+        ),
         backgroundColor: Color(0xffFCE8E6),
         appBar: AppBar(
           title: Text('تسجيل جديد'),

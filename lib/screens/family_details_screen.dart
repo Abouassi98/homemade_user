@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homemade_user/config.dart';
 import '../models/product.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import '../widgets/product_item.dart';
@@ -61,6 +62,10 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
     print(editedList.length);
     var mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
+      bottomNavigationBar: Config.buildBottomNavigationBar(
+          mediaQuery: mediaQuery,
+          context: context,
+        ),
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Stack(

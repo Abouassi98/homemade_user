@@ -9,7 +9,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    print('de');
+    
     var mediaQuery = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: Color(0xffFCE8E6),
@@ -17,8 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           // top left circle
           Positioned(
-            right: -50,
-            top: -240,
+            right: mediaQuery.size.width*-0.15,
+            top: mediaQuery.size.height*-0.37,
             child: Container(
               height: mediaQuery.size.height * 0.8,
               width: mediaQuery.size.width * 0.4,
@@ -29,8 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ),
           Positioned(
-            left: -20,
-            top: -100,
+            left: mediaQuery.size.width*-0.06,
+            top: mediaQuery.size.height*-0.18,
             child: Container(
               height: mediaQuery.size.height * 0.8,
               width: 50,
@@ -54,9 +54,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
           // bottom circles
           Positioned(
-            bottom: -200,
-            left: -10,
-            right: -10,
+            bottom: mediaQuery.size.height*-0.30,
+            left: mediaQuery.size.width*-0.04,
+            right: mediaQuery.size.width*-0.04,
             child: Container(
               height: mediaQuery.size.height * 0.8,
               width: double.infinity,
@@ -102,8 +102,8 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ),
           Positioned(
-            bottom: -50,
-            left: -20,
+            bottom: mediaQuery.size.height*-0.07,
+            left: mediaQuery.size.height*-0.03,
             child: Container(
               height: mediaQuery.size.height * 0.18,
               width: mediaQuery.size.width * 0.18,
