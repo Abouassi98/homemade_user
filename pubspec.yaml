@@ -28,6 +28,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   font_awesome_flutter: ^8.10.0
   smooth_star_rating: ^1.1.1
+  typicons_flutter: ^0.4.2
 
 dev_dependencies:
   flutter_test:

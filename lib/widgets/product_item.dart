@@ -81,6 +81,7 @@ class ProductItem extends StatelessWidget {
                         ),
                         Spacer(),
                         SmoothStarRating(
+                          color: Color(0xffFFC757),
                           isReadOnly: true,
                           size: 15,
                           rating: rating,
@@ -106,7 +107,8 @@ class ProductItem extends StatelessWidget {
                     label: Text('السعر: $price'),
                     labelStyle: TextStyle(
                       fontFamily: 'HomeMade',
-                        color: Color(0xff366775), ),
+                      color: Color(0xff366775),
+                    ),
                   ),
                 ],
               ),

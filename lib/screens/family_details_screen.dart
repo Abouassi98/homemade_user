@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:homemade_user/config.dart';
-import '../models/product.dart';
+import 'package:typicons_flutter/typicons_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import '../models/product.dart';
 import '../widgets/product_item.dart';
+import 'package:homemade_user/config.dart';
 
 class FamilyDetailsScreen extends StatefulWidget {
   @override
@@ -63,32 +64,32 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
     var mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
       bottomNavigationBar: Config.buildBottomNavigationBar(
-          mediaQuery: mediaQuery,
-          context: context,
+        mediaQuery: mediaQuery,
+        context: context,
+      ),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 30,
+            color: Theme.of(context).primaryColor,
+          ),
+          onPressed: () {},
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Typicons.shopping_cart, size: 30, color: Theme.of(context).primaryColor),
+            onPressed: () {},
+          ),
+        ],
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      extendBodyBehindAppBar: true,
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Stack(
           children: [
-            Positioned(
-              top: mediaQuery.height * 0.03,
-              left: mediaQuery.width * 0.01,
-              right: mediaQuery.width * 0.01,
-              child: ListTile(
-                leading: IconButton(
-                  icon:
-                      Icon(Icons.shopping_cart, size: 30, color: Colors.white),
-                  onPressed: () {},
-                ),
-                trailing: IconButton(
-                  icon: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 30,
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-            ),
             Positioned(
               top: 0,
               left: 0,

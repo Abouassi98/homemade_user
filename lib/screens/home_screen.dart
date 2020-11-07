@@ -40,12 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(30)),
               onPressed: onPressed,
               color: Color(0xffF4AC94),
-              child: Text(
-                buttonTitle,
-                style: TextStyle(
-                  color: Color(0xff366775),
-                  fontSize: 25,
-                  fontWeight: FontWeight.w300,
+              child: Container(
+                child: Text(
+                  buttonTitle,
+                  style: TextStyle(
+                    color: Color(0xff366775),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
             ),
@@ -58,10 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
-    return Scaffold(bottomNavigationBar: Config.buildBottomNavigationBar(
-          mediaQuery: mediaQuery,
-          context: context,
-        ),
+    print(mediaQuery.width);
+    return Scaffold(
+      bottomNavigationBar: Config.buildBottomNavigationBar(
+        mediaQuery: mediaQuery,
+        context: context,
+      ),
       backgroundColor: Colors.white,
       body: Directionality(
         textDirection: TextDirection.rtl,
@@ -154,7 +158,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-
                       mediaQuery: mediaQuery,
                     ),
                   ],
