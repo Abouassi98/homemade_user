@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import './screens/splash_screen.dart';
 import './screens/home_screen.dart';
 import './screens/signup_screen.dart';
-import './screens/order_screen.dart';
-import './screens/cart_screen.dart';
-import './screens/meals_overview_screen.dart';
+import './screens/settings_screen.dart';
+import './screens/edit_profile_screen.dart';
+import 'screens/order_details_screen.dart';
+import 'screens/order_summary_screen.dart';
+import './screens/order_list_screen.dart';
 import './screens/family_details_screen.dart';
+import './screens/driver_search_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         fontFamily: 'HomeMade',
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: OrderDetailsScreen(),
+      home: SplashScreen(),
 
     );
   }

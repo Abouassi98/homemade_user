@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homemade_user/screens/order_screen.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import '../models/product.dart';
@@ -239,7 +240,9 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                   itemCount: editedList.length,
                   itemBuilder: (ctx, i) => InkWell(
                     splashColor: Color(0xffFCE8E6),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(PageRouteBuilder(pageBuilder: (_,__,___)=>OrderScreen(),),);
+                    },
                     child: ProductItem(
                       description: editedList[i].description,
                       price: editedList[i].price,

@@ -125,7 +125,7 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: screenSize.width * 0.05,
+                width: screenSize.width * 0.03,
               ),
               Icon(FontAwesomeIcons.search, color: Colors.grey),
               SizedBox(
@@ -136,6 +136,9 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
                 style: TextStyle(
                   color: Color(0xff366775),
                 ),
+              ),
+               SizedBox(
+                // width: screenSize.width * 0.4,
               ),
             ],
           ),

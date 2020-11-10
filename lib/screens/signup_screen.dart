@@ -10,48 +10,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   var acceptRules = false;
-  Widget buildTextFormField({
-    String hintText,
-    void Function(String value) onChanged,
-    String Function(String value) validator,
-  }) {
-    return Card(
-      elevation: 7,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-      ),
-      color: Colors.white,
-      child: TextFormField(
-        onChanged: onChanged,
-        validator: validator,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          hintText: hintText,
-          hintStyle: TextStyle(
-            color: Color(0xffF3AB93),
-            fontSize: 20,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
-            borderRadius: BorderRadius.circular(30),
-          ),
-        ),
-      ),
-    );
-  }
+  
 
   var _formKey = GlobalKey<FormState>();
   @override
@@ -86,19 +45,19 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: mediaQuery.height * 0.3,
                     ),
                   ),
-                  buildTextFormField(
+                  Config.buildTextFormField(
                     hintText: 'الاسم',
                   ),
-                  buildTextFormField(
+                  Config.buildTextFormField(
                     hintText: 'رقم الجوال',
                   ),
-                  buildTextFormField(
+                  Config.buildTextFormField(
                     hintText: 'البريد الإلكتروني',
                   ),
-                  buildTextFormField(
+                  Config.buildTextFormField(
                     hintText: 'كلمة المرور',
                   ),
-                  buildTextFormField(
+                  Config.buildTextFormField(
                     hintText: 'تأكيد كلمة المرور',
                   ),
                   SizedBox(

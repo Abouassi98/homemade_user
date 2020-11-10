@@ -27,6 +27,8 @@ dependencies:
   carousel_slider: ^2.3.1
   cupertino_icons: ^1.0.0
   font_awesome_flutter: ^8.10.0
+  google_maps_flutter: ^1.0.6
+  # location: ^3.0.2
   smooth_star_rating: ^1.1.1
   typicons_flutter: ^0.4.2
 

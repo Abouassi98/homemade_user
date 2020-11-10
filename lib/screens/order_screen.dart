@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homemade_user/config.dart';
+import 'package:homemade_user/screens/driver_search_screen.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 import '../widgets/checkboxlisttile_item.dart';
@@ -16,8 +17,9 @@ class _OrderScreenState extends State<OrderScreen> {
     var mediaQuery = MediaQuery.of(context).size;
 
     return Scaffold(
-      bottomNavigationBar: Config.buildBottomNavigationBar(mediaQuery: mediaQuery),
-            appBar: AppBar(
+      bottomNavigationBar:
+          Config.buildBottomNavigationBar(mediaQuery: mediaQuery),
+      appBar: AppBar(
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
@@ -125,7 +127,7 @@ class _OrderScreenState extends State<OrderScreen> {
                     children: [
                       Container(
                         padding: EdgeInsets.all(12),
-                        height: mediaQuery.height * 0.14,
+                        height: mediaQuery.height * 0.15,
                         width: mediaQuery.width,
                         color: Color(0xffFCE8E6),
                         child: Column(
@@ -190,7 +192,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                 physics: ScrollPhysics(
                                   parent: NeverScrollableScrollPhysics(),
                                 ),
-                                padding: EdgeInsets.all(12),
+                                padding: EdgeInsets.all(7),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         childAspectRatio: 3.4,
@@ -235,7 +237,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                 physics: ScrollPhysics(
                                   parent: NeverScrollableScrollPhysics(),
                                 ),
-                                padding: EdgeInsets.all(12),
+                                padding: EdgeInsets.all(7),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         childAspectRatio: 3.4,
@@ -272,7 +274,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: mediaQuery.width * 0.59,
+                                  width: mediaQuery.width * 0.58,
                                 ),
                                 InkWell(
                                   onTap: () {
@@ -352,7 +354,9 @@ class _OrderScreenState extends State<OrderScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: mediaQuery.height*0.01,),
+                            SizedBox(
+                              height: mediaQuery.height * 0.01,
+                            ),
                             //  CheckBoxListTileItem(
                             //    title: 'اضافة',
 
@@ -398,7 +402,14 @@ class _OrderScreenState extends State<OrderScreen> {
                           child: RaisedButton(
                             elevation: 8,
                             color: Color(0xffF3AB93),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (_, __, ___) =>
+                                      DriverSearchScreen(),
+                                ),
+                              );
+                            },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
