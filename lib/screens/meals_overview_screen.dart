@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:homemade_user/config.dart';
+import 'package:homemade_user/models/family.dart';
 import 'package:homemade_user/screens/family_details_screen.dart';
-import '../models/families.dart';
+import 'package:homemade_user/screens/search_screen.dart';
+// import '../models/families.dart';
 import '../widgets/meals_item.dart';
+import 'package:provider/provider.dart';
+import '../providers/families/families.dart';
 
 class MealsOverviewScreen extends StatefulWidget {
   @override
@@ -13,7 +17,31 @@ class MealsOverviewScreen extends StatefulWidget {
 
 class _MealsOverviewScreenState extends State<MealsOverviewScreen>
     with SingleTickerProviderStateMixin {
-  // var _tabController = TabController(initialIndex: 4,length: 3);
+  List<String> imgList = [
+    'images/food1.jpg',
+    'images/food2.jpg',
+    'images/food3.jpg',
+    'images/food4.jpg',
+  ];
+  String searchedItem = '';
+  String categoryItem = 'الكل';
+  bool menuCheck = false;
+  // zero=>filter by rating , one =>filter by distance
+  int filterType = 0;
+  bool isSearch = false;
+  bool isInit = true;
+  List<Family> editedList;
+
+  void sortFamilies() {
+    if (filterType == 0) {
+      editedList
+          .sort((family1, family2) => family2.rating.compareTo(family1.rating));
+    } else if (filterType == 1) {
+      editedList.sort(
+          (family1, family2) => family1.distance.compareTo(family2.distance));
+    }
+  }
+
   List<String> categories = [
     'الكل',
     'بيتزا',
@@ -23,124 +51,88 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
     'مأكولات بحرية',
     'مأكولات لحمية',
   ];
-  List<Families> familyShop = [
-    Families(
-        imageUrl: 'images/homemade_logo.PNG',
-        name: 'أهل الشام',
-        category: 'لحم',
-        orderCount: 22,
-        rating: 3,
-        directions: 8),
-    Families(
-        imageUrl: 'images/homemade_logo.PNG',
-        name: 'بيك',
-        category: 'معجنات',
-        orderCount: 25,
-        rating: 4.5,
-        directions: 18),
-    Families(
-        imageUrl: 'images/homemade_logo.PNG',
-        name: 'جاد',
-        category: 'مأكولات سريعة',
-        orderCount: 10,
-        rating: 2,
-        directions: 14),
-    Families(
-        imageUrl: 'images/homemade_logo.PNG',
-        name: 'أهل الشام',
-        category: 'مأكولات بحرية',
-        orderCount: 22,
-        rating: 3,
-        directions: 8),
-    Families(
-        imageUrl: 'images/homemade_logo.PNG',
-        name: 'أهل الشام',
-        category: 'حلويات',
-        orderCount: 22,
-        rating: 3,
-        directions: 8),
-    Families(
-        imageUrl: 'images/homemade_logo.PNG',
-        name: 'أهل الشام',
-        category: 'مأكولات لحمية',
-        orderCount: 22,
-        rating: 3,
-        directions: 8),
-    Families(
-        imageUrl: 'images/homemade_logo.PNG',
-        name: 'دووم',
-        category: 'بيتزا',
-        orderCount: 22,
-        rating: 3,
-        directions: 8),
-    Families(
-        imageUrl: 'images/homemade_logo.PNG',
-        name: 'أهل الشام',
-        category: 'لحم',
-        orderCount: 22,
-        rating: 3,
-        directions: 8),
-  ];
-  List<String> imgList = [
-    'images/food1.jpg',
-    'images/food2.jpg',
-    'images/food3.jpg',
-    'images/food4.jpg',
-  ];
-  String categoryItem = 'حلويات';
+
   @override
   Widget build(BuildContext context) {
-    List<Families> editedList = familyShop.where((element) {
-      if (categoryItem == 'الكل') {
-        return true;
-      } else if (element.category == categoryItem) {
-        return true;
-      }
-      return false;
-    }).toList();
-
     var screenSize = MediaQuery.of(context).size;
+    var provider = Provider.of<Families>(context, listen: false);
+    editedList = provider.items(category: categoryItem);
+    sortFamilies();
     return Scaffold(
-        bottomNavigationBar: Config.buildBottomNavigationBar(
-          mediaQuery: screenSize,
-          context: context,
-        ),
-
+      bottomNavigationBar: Config.buildBottomNavigationBar(
+        mediaQuery: screenSize,
+        context: context,
+      ),
       appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(
-              FontAwesomeIcons.filter,
-              color: Colors.white,
-            ),
-            onPressed: null),
-        title: Container(
-          width: screenSize.width * 0.9,
-          height: screenSize.height * 0.06,
-          // padding: EdgeInsets.all(7),
-          decoration: BoxDecoration(
+        leading: PopupMenuButton(
+          onSelected: (filter) {
+            print(filter);
+            if (filter == 0) {
+              setState(() {
+                filterType = 0;
+                menuCheck = false;
+              });
+            } else if (filter == 1) {
+              setState(() {
+                filterType = 1;
+                menuCheck = true;
+              });
+            }
+          },
+          icon: Icon(
+            FontAwesomeIcons.filter,
             color: Colors.white,
-            borderRadius: BorderRadius.circular(25),
           ),
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: screenSize.width * 0.03,
+          itemBuilder: (ctx) => [
+            CheckedPopupMenuItem(
+              checked: !menuCheck,
+              child: Text('حسب التقييم'),
+              value: 0,
+            ),
+            CheckedPopupMenuItem(
+              checked: menuCheck,
+              child: Text('حسب الأقرب لك'),
+              value: 1,
+            ),
+          ],
+        ),
+        title: GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                pageBuilder: (_, __, ___) => SearchScreen(),
               ),
-              Icon(FontAwesomeIcons.search, color: Colors.grey),
-              SizedBox(
-                width: screenSize.width * 0.4,
-              ),
-              Text(
-                'البحث',
-                style: TextStyle(
-                  color: Color(0xff366775),
+            );
+          },
+          child: Container(
+            width: screenSize.width * 0.9,
+            height: screenSize.height * 0.06,
+            // padding: EdgeInsets.all(7),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: screenSize.width * 0.03,
                 ),
-              ),
-               SizedBox(
-                // width: screenSize.width * 0.4,
-              ),
-            ],
+                Icon(FontAwesomeIcons.search, color: Colors.grey),
+                SizedBox(
+                  width: screenSize.width * 0.4,
+                ),
+                Text(
+                  'البحث',
+                  style: TextStyle(
+                    color: Color(0xff366775),
+                  ),
+                ),
+                SizedBox(
+                    // width: screenSize.width * 0.4,
+                    ),
+              ],
+            ),
           ),
         ),
         actions: [
@@ -156,13 +148,12 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: SingleChildScrollView(
-                  child: Column(
+          child: Column(
             children: [
               //show image slider
               Container(
                 height: screenSize.height * 0.2,
                 child: Carousel(
-                  
                   boxFit: BoxFit.cover,
                   dotColor: Color(0xffF4AC94).withOpacity(0.8),
                   dotSize: 5.5,
@@ -221,21 +212,24 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
                     splashColor: Color(0xffFCE8E6),
                     onTap: () {
                       print('ss');
-                       Navigator.of(context).push(
-                            PageRouteBuilder(
-                              pageBuilder: (_, __, ___) => FamilyDetailsScreen(),
-                            settings: RouteSettings(name: 'name',arguments: editedList[i].name,),
-                            ),
-                            
-                          );
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => FamilyDetailsScreen(),
+                          settings: RouteSettings(
+                            name: 'name',
+                            arguments: editedList[i].name,
+                          ),
+                        ),
+                      );
                     },
                     child: MealsItem(
-                        shopLogo: editedList[i].imageUrl,
-                        title: editedList[i].name,
-                        category: editedList[i].category,
-                        orderCount: editedList[i].orderCount,
-                        directions: editedList[i].directions,
-                        rating: editedList[i].rating),
+                      shopLogo: editedList[i].imageUrl,
+                      title: editedList[i].name,
+                      category: editedList[i].category,
+                      orderCount: editedList[i].orderCount,
+                      directions: editedList[i].distance,
+                      rating: editedList[i].rating,
+                    ),
                   ),
                 ),
               ),

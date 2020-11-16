@@ -23,15 +23,26 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  carousel_pro: ^1.0.0
-  carousel_slider: ^2.3.1
-  cupertino_icons: ^1.0.0
-  font_awesome_flutter: ^8.10.0
-  google_maps_flutter: ^1.0.6
+  awesome_dialog:  
+  carousel_pro:  
+  carousel_slider:  
+  cupertino_icons:
+  dio:  
+  firebase_messaging:
+  flutter_ringtone_player:
+  flutter_spinkit:  
+  fluttertoast:
+  font_awesome_flutter:
+  google_maps_flutter:  
   # location: ^3.0.2
-  smooth_star_rating: ^1.1.1
-  typicons_flutter: ^0.4.2
-
+  progress_dialog:
+  provider:
+  pin_code_fields:
+  shared_preferences:  
+  slide_countdown_clock:
+  smooth_star_rating: 
+  splash_screen_view:   
+  typicons_flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,2 +1,2 @@
-import './models/families.dart';
+import 'models/family.dart';
 import './models/product.dart';

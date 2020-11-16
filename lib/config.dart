@@ -51,6 +51,8 @@ class Config {
     String hintText,
     void Function(String value) onChanged,
     String Function(String value) validator,
+    bool centered = false,
+    TextInputType type,
   }) {
     return Card(
       elevation: 7,
@@ -59,6 +61,7 @@ class Config {
       ),
       color: color==null? Colors.white:color,
       child: TextFormField(
+        keyboardType: type,
         onChanged: onChanged,
         validator: validator,
         decoration: InputDecoration(
