@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:homemade_user/config.dart';
+// import 'package:homemade_user/providers/auth/phoneVerificationProvider.dart';
 import 'package:homemade_user/screens/confirm_phone_screen.dart';
+import 'package:provider/provider.dart';
 
 class MobileRegisterScreen extends StatelessWidget {
   @override
@@ -43,7 +45,8 @@ class MobileRegisterScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Config.buildTextFormField(hintText: 'رقم الجوال',type: TextInputType.phone),
+              child: Config.buildTextFormField(
+                  hintText: 'رقم الجوال', type: TextInputType.phone),
             ),
             Container(
               width: mediaQuery.width * 0.8,
@@ -54,9 +57,11 @@ class MobileRegisterScreen extends StatelessWidget {
                 onPressed: () {
                   print('sssssss');
                   Navigator.of(context).push(
-                    PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => ConfirmPhoneScreen(),
-                        ),
+                    MaterialPageRoute(
+                      builder: (context) => ConfirmPhoneScreen(
+                        stateOfVerificationCode: 1,
+                      ),
+                    ),
                   );
                 },
                 shape: RoundedRectangleBorder(

@@ -9,11 +9,14 @@ import '../providers/auth/resendCode.dart';
 import '../providers/changeData/changePhoneCodeProvider.dart';
 import 'package:provider/provider.dart';
 
-
 class ConfirmPhoneScreen extends StatefulWidget {
   final String phoneNumber;
   final int stateOfVerificationCode;
-  ConfirmPhoneScreen({this.phoneNumber,this.stateOfVerificationCode,});
+  ConfirmPhoneScreen({
+    this.phoneNumber,
+    this.stateOfVerificationCode,
+    
+  });
   @override
   _ConfirmPhoneScreenState createState() => _ConfirmPhoneScreenState();
 }
@@ -21,15 +24,26 @@ class ConfirmPhoneScreen extends StatefulWidget {
 class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
   bool resend = false;
   int timer = 1;
+  PhoneVerificationProvider register;
+  ConfirmResetCodeProvider confirmRessetCode;
+  ChangePhoneCodeProvider changePhone;
+  bool isInit = true;
+@override
+  void didChangeDependencies() {
+    if(isInit){
+      register = Provider.of<PhoneVerificationProvider>(context, listen: false);
+    confirmRessetCode =
+        Provider.of<ConfirmResetCodeProvider>(context, listen: false);
+    changePhone = Provider.of<ChangePhoneCodeProvider>(context, listen: false);
 
+    }
+    isInit = false;
+    super.didChangeDependencies();
+  }
+  
   @override
   Widget build(BuildContext context) {
-      var register =
-        Provider.of<PhoneVerificationProvider>(context, listen: false);
-    var confirmRessetCode =
-        Provider.of<ConfirmResetCodeProvider>(context, listen: false);
-    var changePhone =
-        Provider.of<ChangePhoneCodeProvider>(context, listen: false);
+    
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Color(0xffFCE8E6),
@@ -68,7 +82,7 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
                   length: 4,
                   backgroundColor:
                       Color(0x00000000), //Theme.of(context).accentColor,
-                 
+
                   textStyle: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 20,
@@ -95,8 +109,8 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
                   onCompleted: (String value) {
                     if (widget.stateOfVerificationCode == 1)
                       // register.phoneVerification(context);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => SignupScreen()));
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => SignupScreen()));
                     else if (widget.stateOfVerificationCode == 2)
                       confirmRessetCode.confirmResetCode(context);
                     else
@@ -122,23 +136,23 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
                         ),
                       ),
                       onTap: () {
-                        // if (widget.stateOfVerificationCode == 1)
-                        //   Provider.of<ResendCodeProvider>(context,
-                        //           listen: false)
-                        //       .phone = register.phone;
-                        // else if (widget.stateOfVerificationCode ==
-                        //     2)
-                        //   Provider.of<ResendCodeProvider>(context,
-                        //           listen: false)
-                        //       .phone = confirmRessetCode.phone;
-                        // else
-                        //   Provider.of<ResendCodeProvider>(context,
-                        //           listen: false)
-                        //       .phone = changePhone.phone;
+                        if (widget.stateOfVerificationCode == 1)
+                          Provider.of<ResendCodeProvider>(context,
+                                  listen: false)
+                              .phone = register.phone;
+                        else if (widget.stateOfVerificationCode ==
+                            2)
+                          Provider.of<ResendCodeProvider>(context,
+                                  listen: false)
+                              .phone = confirmRessetCode.phone;
+                        else
+                          Provider.of<ResendCodeProvider>(context,
+                                  listen: false)
+                              .phone = changePhone.phone;
 
-                        // Provider.of<ResendCodeProvider>(context,
-                        //         listen: false)
-                        //     .resendCode(context);
+                        Provider.of<ResendCodeProvider>(context,
+                                listen: false)
+                            .resendCode(context);
                         setState(() {
                           resend = false;
                         });

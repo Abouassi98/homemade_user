@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:homemade_user/models/auth/phoneVerificationModel.dart';
+import 'package:homemade_user/providers/auth/confirmResetCodeProvider.dart';
+import 'package:homemade_user/providers/auth/phoneVerificationProvider.dart';
+import 'package:homemade_user/providers/changeData/changePhoneCodeProvider.dart';
 import 'screens/signup_or_login_screen.dart';
 import 'package:provider/provider.dart';
 import './providers/products/products.dart';
@@ -58,6 +62,15 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider.value(
               value: Products(),
+            ),
+            ChangeNotifierProvider.value(
+              value: ConfirmResetCodeProvider(),
+            ),
+            ChangeNotifierProvider.value(
+              value: PhoneVerificationProvider(),
+            ),
+            ChangeNotifierProvider.value(
+              value: ChangePhoneCodeProvider(),
             ),
             ChangeNotifierProvider.value(
               value: Families(),
