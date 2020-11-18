@@ -20,7 +20,7 @@ class ProductItem extends StatelessWidget {
         right: 10,
       ),
       width: double.infinity,
-      height: mediaQuery.height * 0.16,
+      height: mediaQuery.height * 0.19,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -58,62 +58,68 @@ class ProductItem extends StatelessWidget {
             width: mediaQuery.width * 0.04,
           ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: mediaQuery.width * 0.65,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: mediaQuery.width * 0.65,
+                  child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  prodTitle,
+                  style: TextStyle(
+                  color: Color(0xff366775),
+                  fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.end,
+                ),
+                Spacer(),
+                SmoothStarRating(
+                  color: Color(0xffFFC757),
+                  isReadOnly: true,
+                  size: 15,
+                  rating: rating,
+
+                )
+              ],
+            ),
+            SizedBox(
+              height: mediaQuery.height*0.01,
+            ),
+            Text(
+              'الوصف: $description',
+              textAlign: TextAlign.start,
+              style: TextStyle(color: Color(0xff366775),fontSize: 12),
+              
+            ),
+          ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          prodTitle,
-                          style: TextStyle(
-                            color: Color(0xff366775),
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.end,
-                        ),
-                        Spacer(),
-                        SmoothStarRating(
-                          color: Color(0xffFFC757),
-                          isReadOnly: true,
-                          size: 15,
-                          rating: rating,
-                        )
-                      ],
+                    SizedBox(
+          width: mediaQuery.width * 0.48,
                     ),
-                    Text(
-                      'الوصف: $description',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(color: Color(0xff366775)),
+                    Chip(
+          backgroundColor: Color(0xffF4AC94),
+          label: Text('السعر: $price'),
+          labelStyle: TextStyle(
+            fontFamily: 'HomeMade',
+            color: Color(0xff366775),
+          ),
                     ),
                   ],
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: mediaQuery.width * 0.48,
-                  ),
-                  Chip(
-                    backgroundColor: Color(0xffF4AC94),
-                    label: Text('السعر: $price'),
-                    labelStyle: TextStyle(
-                      fontFamily: 'HomeMade',
-                      color: Color(0xff366775),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+              ],
+            ),
         ],
       ),
     );

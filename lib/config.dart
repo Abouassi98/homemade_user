@@ -4,6 +4,8 @@ import 'package:homemade_user/screens/home_screen.dart';
 import 'package:homemade_user/screens/order_list_screen.dart';
 import 'package:homemade_user/screens/settings_screen.dart';
 
+import 'screens/edit_profile_screen.dart';
+
 class Config {
   static Widget buildCardContainer({
     Size mediaQuery,
@@ -153,7 +155,7 @@ class Config {
                     );
                   },
                   icon: Icon(
-                    FontAwesomeIcons.listAlt,
+                    FontAwesomeIcons.fileAlt,
                     size: mediaQuery.height * 0.05,
                     color: Colors.white,
                   ),
@@ -163,11 +165,11 @@ class Config {
               ? Container()
               : IconButton(
                 onPressed: () {
-                    // Navigator.of(context).push(
-                    //   PageRouteBuilder(
-                    //     pageBuilder: (_, __, ___) => HomeScreen(),
-                    //   ),
-                    // );
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (_, __, ___) => EditProfileScreen(),
+                      ),
+                    );
                   },
                   icon: Icon(
                     Icons.person,

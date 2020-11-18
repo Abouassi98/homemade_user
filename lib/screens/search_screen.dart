@@ -69,7 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
           actions: [
             IconButton(
               icon: Icon(Icons.arrow_forward_ios),
-              onPressed: () {},
+              onPressed: () {Navigator.of(context).pop();},
             ),
           ],
         ),

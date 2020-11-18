@@ -10,6 +10,12 @@ import '../widgets/meals_item.dart';
 import 'package:provider/provider.dart';
 import '../providers/families/families.dart';
 
+enum FilterType {
+  Rating,
+  Nearest,
+  MostOrdered,
+}
+
 class MealsOverviewScreen extends StatefulWidget {
   @override
   _MealsOverviewScreenState createState() => _MealsOverviewScreenState();
@@ -17,6 +23,7 @@ class MealsOverviewScreen extends StatefulWidget {
 
 class _MealsOverviewScreenState extends State<MealsOverviewScreen>
     with SingleTickerProviderStateMixin {
+  FilterType filterType = FilterType.Rating;
   List<String> imgList = [
     'images/food1.jpg',
     'images/food2.jpg',
@@ -27,18 +34,30 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
   String categoryItem = 'الكل';
   bool menuCheck = false;
   // zero=>filter by rating , one =>filter by distance
-  int filterType = 0;
+
   bool isSearch = false;
   bool isInit = true;
   List<Family> editedList;
 
   void sortFamilies() {
-    if (filterType == 0) {
-      editedList
-          .sort((family1, family2) => family2.rating.compareTo(family1.rating));
-    } else if (filterType == 1) {
+    if (filterType == FilterType.Rating) {
       editedList.sort(
-          (family1, family2) => family1.distance.compareTo(family2.distance));
+        (family1, family2) => family2.rating.compareTo(
+          family1.rating,
+        ),
+      );
+    } else if (filterType == FilterType.Nearest) {
+      editedList.sort(
+        (family1, family2) => family1.distance.compareTo(
+          family2.distance,
+        ),
+      );
+    } else if (filterType == FilterType.MostOrdered) {
+      editedList.sort(
+        (family1, family2) => family2.distance.compareTo(
+          family1.orderCount,
+        ),
+      );
     }
   }
 
@@ -65,19 +84,12 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
       ),
       appBar: AppBar(
         leading: PopupMenuButton(
+          padding: EdgeInsets.zero,
           onSelected: (filter) {
             print(filter);
-            if (filter == 0) {
-              setState(() {
-                filterType = 0;
-                menuCheck = false;
-              });
-            } else if (filter == 1) {
-              setState(() {
-                filterType = 1;
-                menuCheck = true;
-              });
-            }
+            setState(() {
+              filterType = filter;
+            });
           },
           icon: Icon(
             FontAwesomeIcons.filter,
@@ -85,14 +97,19 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
           ),
           itemBuilder: (ctx) => [
             CheckedPopupMenuItem(
-              checked: !menuCheck,
+              checked: (filterType == FilterType.Rating),
               child: Text('حسب التقييم'),
-              value: 0,
+              value: FilterType.Rating,
             ),
             CheckedPopupMenuItem(
-              checked: menuCheck,
+              checked: filterType == FilterType.Nearest,
               child: Text('حسب الأقرب لك'),
-              value: 1,
+              value: FilterType.Nearest,
+            ),
+            CheckedPopupMenuItem(
+              checked: filterType == FilterType.MostOrdered,
+              child: Text('حسب الأكثر طلباً'),
+              value: FilterType.MostOrdered,
             ),
           ],
         ),
@@ -105,22 +122,23 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
             );
           },
           child: Container(
-            width: screenSize.width * 0.9,
+            width: screenSize.width ,
             height: screenSize.height * 0.06,
-            // padding: EdgeInsets.all(7),
+            padding: EdgeInsets.only(left:4,right: 4),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(25),
             ),
             child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: screenSize.width * 0.03,
-                ),
+                // SizedBox(
+                //   width: screenSize.width * 0.01,
+                //  ),
+
                 Icon(FontAwesomeIcons.search, color: Colors.grey),
                 SizedBox(
-                  width: screenSize.width * 0.4,
+                  width: screenSize.width * 0.35,
                 ),
                 Text(
                   'البحث',
@@ -128,9 +146,7 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
                     color: Color(0xff366775),
                   ),
                 ),
-                SizedBox(
-                    // width: screenSize.width * 0.4,
-                    ),
+                
               ],
             ),
           ),
@@ -171,7 +187,7 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
                 ),
               ),
               Container(
-                height: screenSize.height * 0.07,
+                height: screenSize.height * 0.08,
                 width: screenSize.width,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,

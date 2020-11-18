@@ -23,26 +23,30 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  awesome_dialog:  
-  carousel_pro:  
-  carousel_slider:  
+  awesome_dialog:
+  carousel_pro:
+  carousel_slider:
   cupertino_icons:
-  dio:  
+  dio:
   firebase_messaging:
   flutter_ringtone_player:
-  flutter_spinkit:  
+  flutter_slidable:
+  flutter_spinkit:
   fluttertoast:
   font_awesome_flutter:
-  google_maps_flutter:  
-  # location: ^3.0.2
+  geolocator:  
+  google_maps_flutter:
+  image_picker:
+  location:
   progress_dialog:
   provider:
   pin_code_fields:
-  shared_preferences:  
+  shared_preferences:
   slide_countdown_clock:
-  smooth_star_rating: 
-  splash_screen_view:   
+  smooth_star_rating:
+  splash_screen_view:
   typicons_flutter:
+  webview_flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter

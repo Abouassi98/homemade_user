@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homemade_user/screens/order_summary_screen.dart';
+import 'package:homemade_user/screens/orders/ordersScreen.dart';
 import '../config.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
@@ -35,7 +36,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               size: 30,
               // color: Theme.of(context).primaryColor,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(pageBuilder: (_,__,___)=>OrdersScreen())
+              );
+            },
           ),
         ],
         elevation: 0,

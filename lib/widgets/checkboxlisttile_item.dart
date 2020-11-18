@@ -30,6 +30,7 @@ class _CheckBoxListTileItemState extends State<CheckBoxListTileItem> {
           widget.title,
           style: TextStyle(
             color: Colors.white,
+            fontSize: 12
           ),
         ),
       ],

@@ -24,17 +24,17 @@ class ConfirmPhoneScreen extends StatefulWidget {
 class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
   bool resend = false;
   int timer = 1;
-  PhoneVerificationProvider register;
-  ConfirmResetCodeProvider confirmRessetCode;
-  ChangePhoneCodeProvider changePhone;
+  // PhoneVerificationProvider register;
+  // ConfirmResetCodeProvider confirmRessetCode;
+  // ChangePhoneCodeProvider changePhone;
   bool isInit = true;
 @override
   void didChangeDependencies() {
     if(isInit){
-      register = Provider.of<PhoneVerificationProvider>(context, listen: false);
-    confirmRessetCode =
-        Provider.of<ConfirmResetCodeProvider>(context, listen: false);
-    changePhone = Provider.of<ChangePhoneCodeProvider>(context, listen: false);
+    //   register = Provider.of<PhoneVerificationProvider>(context, listen: false);
+    // confirmRessetCode =
+    //     Provider.of<ConfirmResetCodeProvider>(context, listen: false);
+    // changePhone = Provider.of<ChangePhoneCodeProvider>(context, listen: false);
 
     }
     isInit = false;
@@ -45,7 +45,7 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomPadding: false,
       backgroundColor: Color(0xffFCE8E6),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -76,47 +76,45 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-              child: Center(
-                child: PinCodeTextField(
-                  appContext: context,
-                  length: 4,
-                  backgroundColor:
-                      Color(0x00000000), //Theme.of(context).accentColor,
+              child: PinCodeTextField(
+                appContext: context,
+                length: 4,
+                backgroundColor:
+                    Color(0x00000000), //Theme.of(context).accentColor,
 
-                  textStyle: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                  pinTheme: PinTheme(
-                    activeColor: Theme.of(context).primaryColor,
-                    selectedColor: Theme.of(context).accentColor,
-                    inactiveColor: Theme.of(context).accentColor,
-                  ),
-                  onChanged: (code) {
-                    if (widget.stateOfVerificationCode == 1)
-                      register.code = code;
-                    else if (widget.stateOfVerificationCode == 2)
-                      confirmRessetCode.code = code;
-                    else {
-                      changePhone.code = code;
-                    }
-                  },
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  // textInputType: TextInputType.number,
-                  autoFocus: true,
-                  onCompleted: (String value) {
-                    if (widget.stateOfVerificationCode == 1)
-                      // register.phoneVerification(context);
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => SignupScreen()));
-                    else if (widget.stateOfVerificationCode == 2)
-                      confirmRessetCode.confirmResetCode(context);
-                    else
-                      changePhone.changePhoneCode(null, context);
-                  },
+                textStyle: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
+                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                pinTheme: PinTheme(
+                  activeColor: Theme.of(context).primaryColor,
+                  selectedColor: Theme.of(context).accentColor,
+                  inactiveColor: Theme.of(context).accentColor,
+                ),
+                onChanged: (code) {
+                  // if (widget.stateOfVerificationCode == 1)
+                  //   register.code = code;
+                  // else if (widget.stateOfVerificationCode == 2)
+                  //   confirmRessetCode.code = code;
+                  // else {
+                  //   changePhone.code = code;
+                  // }
+                },
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                // textInputType: TextInputType.number,
+                autoFocus: true,
+                onCompleted: (String value) {
+                  if (widget.stateOfVerificationCode == 1)
+                    // register.phoneVerification(context);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => SignupScreen()));
+                  // else if (widget.stateOfVerificationCode == 2)
+                  //   confirmRessetCode.confirmResetCode(context);
+                  // else
+                  //   changePhone.changePhoneCode(null, context);
+                },
               ),
             ),
             Visibility(
@@ -136,23 +134,23 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
                         ),
                       ),
                       onTap: () {
-                        if (widget.stateOfVerificationCode == 1)
-                          Provider.of<ResendCodeProvider>(context,
-                                  listen: false)
-                              .phone = register.phone;
-                        else if (widget.stateOfVerificationCode ==
-                            2)
-                          Provider.of<ResendCodeProvider>(context,
-                                  listen: false)
-                              .phone = confirmRessetCode.phone;
-                        else
-                          Provider.of<ResendCodeProvider>(context,
-                                  listen: false)
-                              .phone = changePhone.phone;
+                        // if (widget.stateOfVerificationCode == 1)
+                        //   Provider.of<ResendCodeProvider>(context,
+                        //           listen: false)
+                        //       .phone = register.phone;
+                        // else if (widget.stateOfVerificationCode ==
+                        //     2)
+                        //   Provider.of<ResendCodeProvider>(context,
+                        //           listen: false)
+                        //       .phone = confirmRessetCode.phone;
+                        // else
+                        //   Provider.of<ResendCodeProvider>(context,
+                        //           listen: false)
+                        //       .phone = changePhone.phone;
 
-                        Provider.of<ResendCodeProvider>(context,
-                                listen: false)
-                            .resendCode(context);
+                        // Provider.of<ResendCodeProvider>(context,
+                        //         listen: false)
+                        //     .resendCode(context);
                         setState(() {
                           resend = false;
                         });

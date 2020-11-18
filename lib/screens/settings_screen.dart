@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:homemade_user/screens/Wallet/wallet.dart';
+import 'package:homemade_user/screens/edit_profile_screen.dart';
+import 'package:homemade_user/screens/myPlaces/myPlaces.dart';
 import 'package:homemade_user/screens/order_list_screen.dart';
 import '../config.dart';
 
@@ -64,22 +67,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 children: [
                   Config.buildCardContainer(
+                    onPressed: (){
+                      Navigator.of(context).push( PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => EditProfileScreen(),
+                        ),
+                      );
+                    },
                       mediaQuery: mediaQuery, cardTitle: 'الملف الشخصي'),
                   Config.buildCardContainer(
+                    onPressed: (){
+                      Navigator.of(context).push( PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => MyPlaces(),
+                        ),
+                      );
+                    },
+                    
                       mediaQuery: mediaQuery, cardTitle: 'العناوين'),
                   Config.buildCardContainer(
+                    onPressed: (){
+                      Navigator.of(context).push( PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => MyWallet(),
+                        ),
+                      );
+                    },
+                    
                       mediaQuery: mediaQuery, cardTitle: 'المحفظة'),
                   Config.buildCardContainer(
-                    onPressed:(){
-                       Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => OrderListScreen(),
-                      ),
-                    );
-                    },
-                      mediaQuery: mediaQuery, cardTitle: 'عدد الطلبات'),
-                  Config.buildCardContainer(
-                      mediaQuery: mediaQuery, cardTitle: 'الكوبونات'),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => OrderListScreen(),
+                          ),
+                        );
+                      },
+                      mediaQuery: mediaQuery,
+                      cardTitle: 'عدد الطلبات'),
                   Config.buildCardContainer(
                       mediaQuery: mediaQuery,
                       cardTitle: 'تواصل معنا عبر تيليجرام'),

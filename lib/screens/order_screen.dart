@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:homemade_user/config.dart';
 import 'package:homemade_user/screens/driver_search_screen.dart';
+import 'package:homemade_user/screens/orders/ordersScreen.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 import '../widgets/checkboxlisttile_item.dart';
+import '../widgets/showGeneralDialog.dart';
 
 class OrderScreen extends StatefulWidget {
   @override
@@ -32,7 +34,10 @@ class _OrderScreenState extends State<OrderScreen> {
           IconButton(
             icon: Icon(Typicons.shopping_cart,
                 size: 30, color: Theme.of(context).primaryColor),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => OrdersScreen()));
+            },
           ),
         ],
         backgroundColor: Colors.transparent,
@@ -127,7 +132,7 @@ class _OrderScreenState extends State<OrderScreen> {
                     children: [
                       Container(
                         padding: EdgeInsets.all(12),
-                        height: mediaQuery.height * 0.15,
+                        height: mediaQuery.height * 0.17,
                         width: mediaQuery.width,
                         color: Color(0xffFCE8E6),
                         child: Column(
@@ -192,7 +197,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                 physics: ScrollPhysics(
                                   parent: NeverScrollableScrollPhysics(),
                                 ),
-                                padding: EdgeInsets.all(7),
+                                padding: EdgeInsets.all(2),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         childAspectRatio: 3.4,
@@ -216,41 +221,43 @@ class _OrderScreenState extends State<OrderScreen> {
                         height: mediaQuery.height * 0.18,
                         width: mediaQuery.width * 0.7,
                         color: Color(0xffA2B4C0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'إضافات جانبية :',
-                              maxLines: null,
-                              style: TextStyle(
-                                color: Color(0xff366775),
-                                fontWeight: FontWeight.bold,
+                        child: Expanded(
+                                                  child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'إضافات جانبية :',
+                                maxLines: null,
+                                style: TextStyle(
+                                  color: Color(0xff366775),
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            //  CheckBoxListTileItem(
-                            //    title: 'اضافة',
+                              //  CheckBoxListTileItem(
+                              //    title: 'اضافة',
 
-                            //  ),
-                            Expanded(
-                              child: GridView.builder(
-                                physics: ScrollPhysics(
-                                  parent: NeverScrollableScrollPhysics(),
-                                ),
-                                padding: EdgeInsets.all(7),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        childAspectRatio: 3.4,
-                                        mainAxisSpacing: 0,
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 0),
-                                itemCount: 6,
-                                itemBuilder: (ctx, i) => CheckBoxListTileItem(
-                                  title: 'اضافة عنصر',
+                              //  ),
+                              Expanded(
+                                child: GridView.builder(
+                                  physics: ScrollPhysics(
+                                    parent: NeverScrollableScrollPhysics(),
+                                  ),
+                                  padding: EdgeInsets.all(2),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          childAspectRatio: 3.4,
+                                          mainAxisSpacing: 0,
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 0),
+                                  itemCount: 6,
+                                  itemBuilder: (ctx, i) => CheckBoxListTileItem(
+                                    title: 'اضافة عنصر',
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -274,7 +281,8 @@ class _OrderScreenState extends State<OrderScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: mediaQuery.width * 0.58,
+                                  width: mediaQuery.width * 0.52,
+                                  
                                 ),
                                 InkWell(
                                   onTap: () {
@@ -284,7 +292,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                   },
                                   child: Container(
                                     height: mediaQuery.height * 0.04,
-                                    width: mediaQuery.width * 0.06,
+                                    width: mediaQuery.width * 0.07,
                                     color: Color(0xffD66D50),
                                     child: Icon(
                                       Icons.add,
@@ -321,7 +329,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                   },
                                   child: Container(
                                     height: mediaQuery.height * 0.04,
-                                    width: mediaQuery.width * 0.06,
+                                    width: mediaQuery.width * 0.07,
                                     color: Color(0xffD66D50),
                                     child: Icon(
                                       Icons.remove,
@@ -403,12 +411,120 @@ class _OrderScreenState extends State<OrderScreen> {
                             elevation: 8,
                             color: Color(0xffF3AB93),
                             onPressed: () {
-                              Navigator.of(context).push(
-                                PageRouteBuilder(
-                                  pageBuilder: (_, __, ___) =>
-                                      DriverSearchScreen(),
-                                ),
-                              );
+                              GeneraDialog().show(
+                                  context,
+                                  Material(
+                                    child: Container(
+                                      height: mediaQuery.height * 0.2,
+                                      width: mediaQuery.width * 0.9,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(40),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(
+                                              12.0,
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                'هل تريد متابعة التسوق؟',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 12,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Container(
+                                                  height:
+                                                      mediaQuery.height * 0.03,
+                                                  width:
+                                                      mediaQuery.width * 0.37,
+                                                  child: RaisedButton(
+                                                    elevation: 8,
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child:
+                                                        Text('متابعة التسوق'),
+                                                    textColor: Colors.white,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width:
+                                                      mediaQuery.width * 0.03,
+                                                ),
+                                                Container(
+                                                  height:
+                                                      mediaQuery.height * 0.03,
+                                                  width:
+                                                      mediaQuery.width * 0.37,
+                                                  child: RaisedButton(
+                                                    elevation: 8,
+                                                    color: Color(0xffD66D50),
+                                                    child: Text(
+                                                        'إكمال عملية الشراء'),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        PageRouteBuilder(
+                                                          pageBuilder: (_, __,
+                                                                  ___) =>
+                                                              OrdersScreen(),
+                                                        ),
+                                                      );
+                                                    },
+                                                    textColor: Colors.white,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width:
+                                                      mediaQuery.width * 0.03,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ));
+
+                              // Navigator.of(context).push(
+                              //   PageRouteBuilder(
+                              //     pageBuilder: (_, __, ___) =>
+                              //         DriverSearchScreen(),
+                              //   ),
+                              // );
                             },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),

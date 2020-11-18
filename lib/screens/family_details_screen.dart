@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:homemade_user/providers/products/products.dart';
 import 'package:homemade_user/screens/order_screen.dart';
+import 'package:homemade_user/screens/orders/ordersScreen.dart';
+import 'package:provider/provider.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import '../models/product.dart';
@@ -12,14 +16,18 @@ class FamilyDetailsScreen extends StatefulWidget {
 }
 
 class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
+  bool isUrgent = false;
+  bool isInit = true;
   String name;
-  var isInit = true;
+  List<Product> items;
   List<String> categories = [
     'الكل',
+    'وجبات',
+    'معجنات',
+    'حلويات',
     'كب كيك',
-    'شعرية',
-    'كنافة',
-    'فطار',
+    'مشويات',
+    'لحم',
   ];
   String categoryItem = 'الكل';
   List<Product> myProducts = [
@@ -48,10 +56,32 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
         productName: 'كب كيك',
         rating: 3.5),
   ];
+  void sortList() {
+    if (isUrgent) {
+      items.sort((product1, product2) =>
+          product1.productType.index.compareTo(product2.productType.index));
+    } else if (!isUrgent) {
+      items.sort((product1, product2) =>
+          product2.productType.index.compareTo(product1.productType.index));
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (isInit) {
+      isUrgent = Provider.of<Products>(context, listen: false).isUrgentOrder;
+      items =  Provider.of<Products>(context, listen: false).items;
+      sortList();
+    }
+    isInit = false;
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Product> editedList = myProducts.where((element) {
+    items = Provider.of<Products>(context).items;
+    List<Product> editedList = items.where((element) {
       if (element.description.contains(categoryItem)) {
         print('hi');
         return true;
@@ -69,18 +99,32 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
         context: context,
       ),
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 30,
-            color: Theme.of(context).primaryColor,
-          ),
-          onPressed: () {},
+        leading: PopupMenuButton(
+          icon: Icon(FontAwesomeIcons.filter),
+          itemBuilder: (ctx) => [
+            PopupMenuItem(
+              child: Text(isUrgent
+                  ? 'الإنتقال إلى الطلبات المسبقة'
+                  : 'الإنتقال إلى الطلبات الحالية'),
+            ),
+          ],
+          onSelected: (_) {
+            setState(() {
+              isUrgent = true;
+              sortList();
+            });
+              print(isUrgent);
+              print('isUrgent');
+          },
         ),
         actions: [
           IconButton(
-            icon: Icon(Typicons.shopping_cart, size: 30, color: Theme.of(context).primaryColor),
-            onPressed: () {},
+            icon: Icon(Typicons.shopping_cart,
+                size: 30, color: Theme.of(context).primaryColor),
+            onPressed: () {
+              Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => OrdersScreen()));
+            },
           ),
         ],
         backgroundColor: Colors.transparent,
@@ -157,10 +201,10 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
             Positioned(
               left: 0,
               right: 0,
-              top: mediaQuery.height * 0.42,
+              top: mediaQuery.height * 0.41,
               child: Container(
                 padding: EdgeInsets.all(12),
-                height: mediaQuery.height * 0.15,
+                height: mediaQuery.height * 0.16,
                 width: mediaQuery.width,
                 color: Color(0xffFCE8E6),
                 child: Column(
@@ -195,7 +239,7 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
               right: 0,
               left: 0,
               child: Container(
-                height: mediaQuery.height * 0.07,
+                height: mediaQuery.height * 0.08,
                 width: mediaQuery.width,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -241,7 +285,11 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                   itemBuilder: (ctx, i) => InkWell(
                     splashColor: Color(0xffFCE8E6),
                     onTap: () {
-                      Navigator.of(context).push(PageRouteBuilder(pageBuilder: (_,__,___)=>OrderScreen(),),);
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => OrderScreen(),
+                        ),
+                      );
                     },
                     child: ProductItem(
                       description: editedList[i].description,

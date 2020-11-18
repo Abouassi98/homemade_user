@@ -272,6 +272,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      
                     ),
                   ),
                 ),

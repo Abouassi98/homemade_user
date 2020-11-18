@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:homemade_user/config.dart';
+import 'package:homemade_user/providers/products/products.dart';
 import 'package:homemade_user/screens/meals_overview_screen.dart';
+import 'package:provider/provider.dart';
+import '../widgets/buttonSignIn.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool _fromTop = true;
   Widget buildOrderCard({
     @required String imagePath,
     @required String buttonTitle,
@@ -95,29 +99,157 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: mediaQuery.height * 0.02,
                     ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      width: mediaQuery.width * 0.9,
-                      height: mediaQuery.height * 0.08,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'التوصيل لـ',
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Color(0xff366775),
+                    InkWell(
+                      onTap: () {
+                        showGeneralDialog(
+                          barrierLabel: "Label",
+                          barrierDismissible: true,
+                          barrierColor: Colors.black.withOpacity(0.5),
+                          transitionDuration: Duration(milliseconds: 700),
+                          context: context,
+                          pageBuilder: (context, anim1, anim2) {
+                            return Align(
+                              alignment: _fromTop
+                                  ? Alignment.topCenter
+                                  : Alignment.bottomCenter,
+                              child: Material(
+                                child: Container(
+                                  height: 400,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        height: 300,
+                                        child: ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: 4,
+                                            itemBuilder: (_, index) {
+                                              return Column(
+                                                children: [
+                                                  Directionality(
+                                                    textDirection:
+                                                        TextDirection.rtl,
+                                                    child: TextField(
+                                                      cursorColor:
+                                                          Theme.of(context)
+                                                              .primaryColor,
+                                                      readOnly: true,
+                                                      onTap: () {},
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 18),
+                                                      decoration:
+                                                          InputDecoration(
+                                                              hintText:
+                                                                  "عنوان المكان",
+                                                              errorText: "kkkk",
+                                                              errorStyle: TextStyle(
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      400],
+                                                                  fontSize: 16),
+                                                              hintStyle: TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 16),
+                                                              suffixIcon: Icon(
+                                                                Icons.more_vert,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                              prefixIcon:
+                                                                  Material(
+                                                                elevation: 0.0,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          30),
+                                                                ),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .location_on,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                              border:
+                                                                  InputBorder
+                                                                      .none,
+                                                              contentPadding:
+                                                                  EdgeInsets.symmetric(
+                                                                      horizontal:
+                                                                          25,
+                                                                      vertical:
+                                                                          13)),
+                                                    ),
+                                                  ),
+                                                  Divider()
+                                                ],
+                                              );
+                                            }),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: SignInButton(
+                                          txtColor: Colors.white,
+                                          onPressSignIn: () {},
+                                          iconData: Icons
+                                              .arrow_drop_down_circle_outlined,
+                                          btnWidth:
+                                              MediaQuery.of(context).size.width,
+                                          btnHeight: 45,
+                                          btnColor: Colors.red,
+                                          iColor: Colors.white,
+                                          buttonText: 'عنوان جديد',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          transitionBuilder: (context, anim1, anim2, child) {
+                            return SlideTransition(
+                                position: Tween(
+                                        begin: Offset(0, _fromTop ? -1 : 1),
+                                        end: Offset(0, 0.2))
+                                    .animate(anim1),
+                                child: child);
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        width: mediaQuery.width * 0.9,
+                        height: mediaQuery.height * 0.08,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'التوصيل لـ',
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Color(0xff366775),
+                              ),
                             ),
-                          ),
-                          Icon(
-                            FontAwesomeIcons.search,
-                            color: Colors.grey,
-                          ),
-                        ],
+                            Icon(
+                              FontAwesomeIcons.search,
+                              color: Colors.grey,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -137,6 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       imagePath: 'images/urgent_order.PNG',
                       buttonTitle: 'اطلب الآن',
                       onPressed: () {
+                          Provider.of<Products>(context,listen: false).orderType(true);
                         Navigator.of(context).push(
                           PageRouteBuilder(
                             pageBuilder: (_, __, ___) => MealsOverviewScreen(),
@@ -152,6 +285,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       imagePath: 'images/scheduled_order.PNG',
                       buttonTitle: 'اطلب الآن واستلم لاحقاً',
                       onPressed: () {
+                          Provider.of<Products>(context,listen: false).orderType(false);
+
                         Navigator.of(context).push(
                           PageRouteBuilder(
                             pageBuilder: (_, __, ___) => MealsOverviewScreen(),

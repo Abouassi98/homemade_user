@@ -7,6 +7,7 @@ class Family {
   final int orderCount;
   final double rating;
   final int distance;
+ 
   Family({
     @required this.name,
     @required this.category,

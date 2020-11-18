@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homemade_user/helper/map_helper.dart';
 import 'package:homemade_user/models/auth/phoneVerificationModel.dart';
 import 'package:homemade_user/providers/auth/confirmResetCodeProvider.dart';
 import 'package:homemade_user/providers/auth/phoneVerificationProvider.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'HomeMade',
         theme: ThemeData(
           fontFamily: 'HomeMade',
           // This is the theme of your application.
@@ -76,10 +77,12 @@ class MyApp extends StatelessWidget {
               value: Families(),
               // value: Products(),
             ),
+            ChangeNotifierProvider.value(
+              value: MapHelper(),
+            ),
           ],
           child: SplashScreen(),
         ),
-       
       ),
     );
   }
