@@ -43,7 +43,6 @@ class FirebaseNotifications {
     );
   }
 
-
   // ignore: non_constant_identifier_names
   void iOS_Permission() {
     _firebaseMessaging.requestNotificationPermissions(
@@ -59,9 +58,8 @@ class FirebaseNotifications {
   }
 
   void handlePathByRoute(Map<String, dynamic> dataMap) {
-
     navigatorKey.currentState
-        .push(MaterialPageRoute(builder: (context) => SplashScreen()));
+        .push(MaterialPageRoute(builder: (context) => Splash()));
   }
 
   Future onDidReceiveLocalNotification(
@@ -80,7 +78,6 @@ class FirebaseNotifications {
   StreamController<Map<String, dynamic>> get notificationSubject {
     return _onMessageStreamController;
   }
-
 
   void killNotification() {
     _onMessageStreamController.close();

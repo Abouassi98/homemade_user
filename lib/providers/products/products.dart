@@ -91,26 +91,7 @@ class Products with ChangeNotifier {
       productType: ProductType.Scheduled,
       category: 'حلويات',
     ),
-    Product(
-      productId: 14,
-      description: 'فول بالزيت الحار',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'فول',
-      rating: 4.5,
-      productType: ProductType.Urgent,
-      category: 'وجبات',
-    ),
-    Product(
-      productId: 14,
-      description: 'فطار مصري ',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'فول مصري',
-      rating: 4.5,
-      productType: ProductType.Urgent,
-      category: 'وجبات',
-    ),
+   
     Product(
       productId: 14,
       description: 'وجبة عربية لحم وفراخ وبيبسي',

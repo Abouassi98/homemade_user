@@ -1,30 +1,82 @@
+import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:splash_screen_view/SplashScreenView.dart';
-import './signup_or_login_screen.dart';
+import '../helper/firebaseNotifications.dart';
+import '../widgets/BouncyPageRoute.dart';
 
-class SplashScreen extends StatelessWidget {
+import './signup_or_login_screen.dart';
+import 'package:shimmer/shimmer.dart';
+
+class Splash extends StatefulWidget {
+  final GlobalKey<NavigatorState> navigator;
+
+  const Splash({Key key, this.navigator}) : super(key: key);
+
+  @override
+  _SplashState createState() => _SplashState();
+}
+
+class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
+  Future<Timer> _loadData() async {
+    return Timer(Duration(seconds: 3), () {
+      Navigator.of(context)
+          .pushReplacement(BouncyPageRoute(widget: SignupOrLoginScreen()));
+    });
+  }
+
+  @override
+  void initState() {
+    _loadData();
+    FirebaseNotifications().setUpFirebase(widget.navigator);
+    super.initState();
+  }
+
+  GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
-      body: SplashScreenView(
-        home: SignupOrLoginScreen(),
-        duration: 7000,
-        imageSize: 200,
-        imageSrc: "images/homemadelogo.png",
-        text: "مرحبا بكم في تطبيق هوم ميد",
-        textType: TextType.ColorizeAnimationText,
-        textStyle: TextStyle(
-          fontSize: 20.0,
-        ),
-        colors: [
-          Color(0xffFCE8E6),
-          Color(0xff366775),
-          Color(0xffF3AB93),
-          Colors.white,
+      key: _globalKey,
+      backgroundColor: Color(0xffFCE8E6),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * .2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  'images/homemadelogo.png',
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
+              ],
+            ),
+          ),
+          Center(
+            child: Container(
+              margin:
+                  EdgeInsets.only(top: MediaQuery.of(context).size.height * .8),
+              child: Shimmer.fromColors(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "هوم ميد",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      Text(
+                        " مرحبا بكم في تطبيق ",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  baseColor: Colors.black,
+                  highlightColor: Colors.white),
+            ),
+          )
         ],
-         backgroundColor: Color(0xffFCE8E6),
-        // backgroundColor: Color(0xffFCE8E6),
       ),
     );
   }

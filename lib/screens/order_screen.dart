@@ -8,6 +8,10 @@ import '../widgets/checkboxlisttile_item.dart';
 import '../widgets/showGeneralDialog.dart';
 
 class OrderScreen extends StatefulWidget {
+  final bool isEdit;
+  OrderScreen({
+    this.isEdit= false,
+  });
   @override
   _OrderScreenState createState() => _OrderScreenState();
 }
@@ -221,43 +225,41 @@ class _OrderScreenState extends State<OrderScreen> {
                         height: mediaQuery.height * 0.18,
                         width: mediaQuery.width * 0.7,
                         color: Color(0xffA2B4C0),
-                        child: Expanded(
-                                                  child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'إضافات جانبية :',
-                                maxLines: null,
-                                style: TextStyle(
-                                  color: Color(0xff366775),
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'إضافات جانبية :',
+                              maxLines: null,
+                              style: TextStyle(
+                                color: Color(0xff366775),
+                                fontWeight: FontWeight.bold,
                               ),
-                              //  CheckBoxListTileItem(
-                              //    title: 'اضافة',
+                            ),
+                            //  CheckBoxListTileItem(
+                            //    title: 'اضافة',
 
-                              //  ),
-                              Expanded(
-                                child: GridView.builder(
-                                  physics: ScrollPhysics(
-                                    parent: NeverScrollableScrollPhysics(),
-                                  ),
-                                  padding: EdgeInsets.all(2),
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          childAspectRatio: 3.4,
-                                          mainAxisSpacing: 0,
-                                          crossAxisCount: 3,
-                                          crossAxisSpacing: 0),
-                                  itemCount: 6,
-                                  itemBuilder: (ctx, i) => CheckBoxListTileItem(
-                                    title: 'اضافة عنصر',
-                                  ),
+                            //  ),
+                            Expanded(
+                              child: GridView.builder(
+                                physics: ScrollPhysics(
+                                  parent: NeverScrollableScrollPhysics(),
+                                ),
+                                padding: EdgeInsets.all(2),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        childAspectRatio: 3.4,
+                                        mainAxisSpacing: 0,
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 0),
+                                itemCount: 6,
+                                itemBuilder: (ctx, i) => CheckBoxListTileItem(
+                                  title: 'اضافة عنصر',
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
@@ -282,7 +284,6 @@ class _OrderScreenState extends State<OrderScreen> {
                                 ),
                                 SizedBox(
                                   width: mediaQuery.width * 0.52,
-                                  
                                 ),
                                 InkWell(
                                   onTap: () {
@@ -411,7 +412,10 @@ class _OrderScreenState extends State<OrderScreen> {
                             elevation: 8,
                             color: Color(0xffF3AB93),
                             onPressed: () {
-                              GeneraDialog().show(
+                              if(widget.isEdit){
+                                Navigator.of(context).pop();
+                              }else{
+                                GeneraDialog().show(
                                   context,
                                   Material(
                                     child: Container(
@@ -518,6 +522,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                       ),
                                     ),
                                   ));
+                              }
 
                               // Navigator.of(context).push(
                               //   PageRouteBuilder(
@@ -529,7 +534,7 @@ class _OrderScreenState extends State<OrderScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
-                            child: Text('أضف للسلة'),
+                            child: Text(widget.isEdit?'تحديث':'أضف للسلة'),
                             textColor: Theme.of(context).primaryColor,
                           ),
                         ),

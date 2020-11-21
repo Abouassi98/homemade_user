@@ -36,90 +36,79 @@ class ProductItem extends StatelessWidget {
       child: Row(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            // padding: EdgeInsets.all(8),
-            height: mediaQuery.height * 0.13,
-            width: mediaQuery.width * 0.18,
-            child: Card(
-              color: Colors.transparent,
-              elevation: 7,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: Image.asset(
-                  'images/homemade_logo.PNG',
-                  fit: BoxFit.cover,
-                  height: mediaQuery.height * 0.13,
-                  width: mediaQuery.width * 0.13,
-                ),
+          Card(
+            color: Colors.transparent,
+            elevation: 7,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Image.asset(
+                'images/homemade_logo.PNG',
+                fit: BoxFit.cover,
+                height: mediaQuery.height * 0.18,
+                width: mediaQuery.width * 0.23,
               ),
             ),
           ),
-          SizedBox(
-            width: mediaQuery.width * 0.04,
-          ),
           Column(
-            
-              mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: mediaQuery.width * 0.65,
-                  child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  prodTitle,
-                  style: TextStyle(
-                  color: Color(0xff366775),
-                  fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.end,
-                ),
-                Spacer(),
-                SmoothStarRating(
-                  color: Color(0xffFFC757),
-                  isReadOnly: true,
-                  size: 15,
-                  rating: rating,
-
-                )
-              ],
-            ),
-            SizedBox(
-              height: mediaQuery.height*0.01,
-            ),
-            Text(
-              'الوصف: $description',
-              textAlign: TextAlign.start,
-              style: TextStyle(color: Color(0xff366775),fontSize: 12),
-              
-            ),
-          ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: mediaQuery.width * 0.65,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-          width: mediaQuery.width * 0.48,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          prodTitle,
+                          style: TextStyle(
+                            color: Color(0xff366775),
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                        Spacer(),
+                        SmoothStarRating(
+                          color: Color(0xffFFC757),
+                          isReadOnly: true,
+                          size: 15,
+                          rating: rating,
+                        )
+                      ],
                     ),
-                    Chip(
-          backgroundColor: Color(0xffF4AC94),
-          label: Text('السعر: $price'),
-          labelStyle: TextStyle(
-            fontFamily: 'HomeMade',
-            color: Color(0xff366775),
-          ),
+                    SizedBox(
+                      height: mediaQuery.height * 0.01,
+                    ),
+                    Text(
+                      'الوصف: $description',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(color: Color(0xff366775), fontSize: 12),
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: mediaQuery.width * 0.48,
+                  ),
+                  Chip(
+                    backgroundColor: Color(0xffF4AC94),
+                    label: Text('السعر: $price'),
+                    labelStyle: TextStyle(
+                      fontFamily: 'HomeMade',
+                      color: Color(0xff366775),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );

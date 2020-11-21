@@ -8,11 +8,13 @@ import 'screens/signup_or_login_screen.dart';
 import 'package:provider/provider.dart';
 import './providers/products/products.dart';
 import './providers/families/families.dart';
+import './providers/AboutUsProvider.dart';
+import './providers/TermsProvider.dart';
 import './screens/home_screen.dart';
 import './screens/splash_screen.dart';
 import './screens/signup_screen.dart';
 import './screens/settings_screen.dart';
-import './screens/edit_profile_screen.dart';
+import 'screens/personal_data_screen.dart';
 import 'screens/order_details_screen.dart';
 import 'screens/order_summary_screen.dart';
 import './screens/order_list_screen.dart';
@@ -80,8 +82,14 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider.value(
               value: MapHelper(),
             ),
+            ChangeNotifierProvider.value(
+              value: AboutUsProvider(),
+            ),
+            ChangeNotifierProvider.value(
+              value: TermsProvider(),
+            ),
           ],
-          child: SplashScreen(),
+          child: Splash(),
         ),
       ),
     );

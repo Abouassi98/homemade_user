@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:homemade_user/screens/Wallet/wallet.dart';
-import 'package:homemade_user/screens/edit_profile_screen.dart';
-import 'package:homemade_user/screens/myPlaces/myPlaces.dart';
-import 'package:homemade_user/screens/order_list_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
+import './Wallet/wallet.dart';
+import './personal_data_screen.dart';
+import './myPlaces/myPlaces.dart';
+import './order_list_screen.dart';
+import './signup_or_login_screen.dart';
 import '../config.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -67,31 +69,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 children: [
                   Config.buildCardContainer(
-                    onPressed: (){
-                      Navigator.of(context).push( PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => EditProfileScreen(),
-                        ),
-                      );
-                    },
-                      mediaQuery: mediaQuery, cardTitle: 'الملف الشخصي'),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => PersonalDataScreen(),
+                          ),
+                        );
+                      },
+                      mediaQuery: mediaQuery,
+                      cardTitle: 'الملف الشخصي'),
                   Config.buildCardContainer(
-                    onPressed: (){
-                      Navigator.of(context).push( PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => MyPlaces(),
-                        ),
-                      );
-                    },
-                    
-                      mediaQuery: mediaQuery, cardTitle: 'العناوين'),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => MyPlaces(),
+                          ),
+                        );
+                      },
+                      mediaQuery: mediaQuery,
+                      cardTitle: 'العناوين'),
                   Config.buildCardContainer(
-                    onPressed: (){
-                      Navigator.of(context).push( PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => MyWallet(),
-                        ),
-                      );
-                    },
-                    
-                      mediaQuery: mediaQuery, cardTitle: 'المحفظة'),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => MyWallet(),
+                          ),
+                        );
+                      },
+                      mediaQuery: mediaQuery,
+                      cardTitle: 'المحفظة'),
                   Config.buildCardContainer(
                       onPressed: () {
                         Navigator.of(context).push(
@@ -103,8 +109,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       mediaQuery: mediaQuery,
                       cardTitle: 'عدد الطلبات'),
                   Config.buildCardContainer(
+                    onPressed: ()async{
+                       var url = "http://telegram.me/+${201223082534}";
+                      await canLaunch(url) ? launch(url) : print('No WhatsAPP');
+                    },
                       mediaQuery: mediaQuery,
                       cardTitle: 'تواصل معنا عبر تيليجرام'),
+                  Config.buildCardContainer(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => SignupOrLoginScreen(),
+                          ),
+                        );
+                      },
+                      mediaQuery: mediaQuery,
+                      cardTitle: 'تسجيل الخروج'),
                 ],
               ),
             )

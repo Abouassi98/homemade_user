@@ -4,6 +4,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:homemade_user/config.dart';
 import 'package:homemade_user/models/family.dart';
 import 'package:homemade_user/screens/family_details_screen.dart';
+import 'package:homemade_user/screens/orders/ordersScreen.dart';
 import 'package:homemade_user/screens/search_screen.dart';
 // import '../models/families.dart';
 import '../widgets/meals_item.dart';
@@ -122,9 +123,9 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
             );
           },
           child: Container(
-            width: screenSize.width ,
+            width: screenSize.width,
             height: screenSize.height * 0.06,
-            padding: EdgeInsets.only(left:4,right: 4),
+            padding: EdgeInsets.only(left: 4, right: 4),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(25),
@@ -146,7 +147,6 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
                     color: Color(0xff366775),
                   ),
                 ),
-                
               ],
             ),
           ),
@@ -157,7 +157,13 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
               FontAwesomeIcons.shoppingCart,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) =>
+                                        OrdersScreen()));
+                            
+                            
+            },
           ),
         ],
       ),
@@ -216,7 +222,7 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
                 ),
               ),
               Container(
-                height: screenSize.height * 0.61,
+                height: screenSize.height * 0.51,
                 width: screenSize.width,
                 child: ListView.builder(
                   padding: EdgeInsets.only(

@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:homemade_user/screens/mobile_register_screen.dart';
 import './home_screen.dart';
 import '../config.dart';
 
@@ -35,9 +37,46 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Config.buildTextFormField(
                 hintText: 'رقم الجوال',
+                type: TextInputType.number
               ),
               Config.buildTextFormField(
+                secureText: true,
                 hintText: 'كلمة المرور',
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(11.0),
+                  child:RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                              text: 'هل نسيت كلمة المرور؟ ',
+                              style: TextStyle(
+                                  fontFamily: 'HomeMade',
+                                  color: Theme.of(context).primaryColor,
+                                  // fontWeight: FontWeight.bold,
+                                  fontSize: 13),
+                            ),
+                            TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.of(context).push(
+                                    PageRouteBuilder(
+                                      pageBuilder: (_, __, ___) => MobileRegisterScreen(),
+                                    ),
+                                  );
+                                },
+                              text: 'إضغط هنا',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontFamily: 'HomeMade',
+                                  color: Theme.of(context).primaryColor,
+                                  // fontWeight: FontWeight.bold,
+                                  fontSize: 13),
+                            ),
+                          ]),
+                        ),
+                ),
               ),
               SizedBox(
                 height: mediaQuery.height * 0.12,

@@ -30,32 +30,7 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
     'لحم',
   ];
   String categoryItem = 'الكل';
-  List<Product> myProducts = [
-    Product(
-        description: 'شعرية سريعة التحضير لكل الناس',
-        imageUrl: 'images/food1.jpg',
-        price: 15,
-        productName: 'اندومي',
-        rating: 4),
-    Product(
-        description: 'كنافة عربي لفطار لذيذ',
-        imageUrl: 'images/food1.jpg',
-        price: 15,
-        productName: 'كنافة نابلسي',
-        rating: 3),
-    Product(
-        description: 'فطار مصري للصغار والشطار',
-        imageUrl: 'images/food1.jpg',
-        price: 15,
-        productName: 'فول مصري',
-        rating: 4.5),
-    Product(
-        description: 'كب كيك بنكهة الريدفيلفيت',
-        imageUrl: 'images/food1.jpg',
-        price: 15,
-        productName: 'كب كيك',
-        rating: 3.5),
-  ];
+
   void sortList() {
     if (isUrgent) {
       items.sort((product1, product2) =>
@@ -70,7 +45,7 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
   void didChangeDependencies() {
     if (isInit) {
       isUrgent = Provider.of<Products>(context, listen: false).isUrgentOrder;
-      items =  Provider.of<Products>(context, listen: false).items;
+      items = Provider.of<Products>(context, listen: false).items;
       sortList();
     }
     isInit = false;
@@ -82,7 +57,7 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
   Widget build(BuildContext context) {
     items = Provider.of<Products>(context).items;
     List<Product> editedList = items.where((element) {
-      if (element.description.contains(categoryItem)) {
+      if (element.category == categoryItem) {
         print('hi');
         return true;
       }
@@ -98,211 +73,462 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
         mediaQuery: mediaQuery,
         context: context,
       ),
-      appBar: AppBar(
-        leading: PopupMenuButton(
-          icon: Icon(FontAwesomeIcons.filter),
-          itemBuilder: (ctx) => [
-            PopupMenuItem(
-              child: Text(isUrgent
-                  ? 'الإنتقال إلى الطلبات المسبقة'
-                  : 'الإنتقال إلى الطلبات الحالية'),
-            ),
-          ],
-          onSelected: (_) {
-            setState(() {
-              isUrgent = true;
-              sortList();
-            });
-              print(isUrgent);
-              print('isUrgent');
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Typicons.shopping_cart,
-                size: 30, color: Theme.of(context).primaryColor),
-            onPressed: () {
-              Navigator.of(context).push(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => OrdersScreen()));
-            },
-          ),
-        ],
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      extendBodyBehindAppBar: true,
+      // appBar: AppBar(
+      //   leading: PopupMenuButton(
+      //     icon: Icon(FontAwesomeIcons.filter),
+      //     itemBuilder: (ctx) => [
+      //       PopupMenuItem(
+      //         child: Text(isUrgent
+      //             ? 'الإنتقال إلى الطلبات المسبقة'
+      //             : 'الإنتقال إلى الطلبات الحالية'),
+      //       ),
+      //     ],
+      //     onSelected: (_) {
+      //       setState(() {
+      //         isUrgent = true;
+      //         sortList();
+      //       });
+      //         print(isUrgent);
+      //         print('isUrgent');
+      //     },
+      //   ),
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(Typicons.shopping_cart,
+      //           size: 30, color: Theme.of(context).primaryColor),
+      //       onPressed: () {
+      //         Navigator.of(context).push(PageRouteBuilder(
+      //             pageBuilder: (_, __, ___) => OrdersScreen()));
+      //       },
+      //     ),
+      //   ],
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      // ),
+
       body: Directionality(
         textDirection: TextDirection.rtl,
-        child: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-                child: Image.asset(
-                  'images/food1.jpg',
-                  fit: BoxFit.fill,
-                  height: mediaQuery.height * 0.3,
-                ),
-              ),
-            ),
-            Positioned(
-              top: mediaQuery.height * 0.2,
-              right: mediaQuery.height * 0.01,
-              child: Container(
-                height: mediaQuery.height * 0.2,
-                width: mediaQuery.width * 0.4,
-                child: Card(
-                  color: Colors.transparent,
-                  elevation: 7,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset(
-                      'images/homemade_logo.PNG',
-                      fit: BoxFit.cover,
-                      height: mediaQuery.height * 0.3,
-                      width: mediaQuery.width * 0.3,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: mediaQuery.height * 0.25,
-              right: mediaQuery.height * 0.26,
-              left: mediaQuery.height * 0.02,
-              child: Container(
-                height: mediaQuery.height * 0.2,
-                width: mediaQuery.width * 0.55,
-                child: Row(
-                  children: [
-                    Text(
-                      'اسم المتجر',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff366775),
-                      ),
-                    ),
-                    Spacer(),
-                    SmoothStarRating(
-                      size: 15,
-                      isReadOnly: false,
-                      rating: 4.5,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: mediaQuery.height * 0.41,
-              child: Container(
-                padding: EdgeInsets.all(12),
-                height: mediaQuery.height * 0.16,
-                width: mediaQuery.width,
-                color: Color(0xffFCE8E6),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'الوصف: متجر يقدم انواع مختلفة من الحلويات و الكيك لجميع المناسبات',
-                      maxLines: null,
-                      style: TextStyle(
-                        color: Color(0xff366775),
-                      ),
-                    ),
-                    Text(
-                      'أوقات العمل: ٠٠:٧ صباحا - ٠٠:١١ مساءا',
-                      style: TextStyle(
-                        color: Color(0xff366775),
-                      ),
-                    ),
-                    Text(
-                      'الحالة: مفتوح',
-                      maxLines: null,
-                      style: TextStyle(
-                        color: Color(0xff366775),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              top: mediaQuery.height * 0.57,
-              right: 0,
-              left: 0,
-              child: Container(
-                height: mediaQuery.height * 0.08,
-                width: mediaQuery.width,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: categories.length,
-                  itemBuilder: (ctx, i) => GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        categoryItem = categories[i];
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: categoryItem == categories[i]
-                            ? Color(0xffF4AC94)
-                            : null,
-                      ),
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        categories[i],
-                        style: TextStyle(color: Color(0xff366775)),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: mediaQuery.height * 0.64,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              child: Container(
-                height: mediaQuery.height * 0.61,
-                width: mediaQuery.width,
-                child: ListView.builder(
-                  padding: EdgeInsets.only(
-                    top: 2,
-                    bottom: 3,
-                  ),
-                  itemCount: editedList.length,
-                  itemBuilder: (ctx, i) => InkWell(
-                    splashColor: Color(0xffFCE8E6),
-                    onTap: () {
-                      Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => OrderScreen(),
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              bottom: PreferredSize(
+                // preferredSize: mediaQuery,
+                child: Container(
+                  height: mediaQuery.height * 0.08,
+                  width: mediaQuery.width,
+                  color: Colors.white,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categories.length,
+                    itemBuilder: (ctx, i) => GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          categoryItem = categories[i];
+                        });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: categoryItem == categories[i]
+                              ? Color(0xffF4AC94)
+                              : null,
                         ),
-                      );
-                    },
-                    child: ProductItem(
-                      description: editedList[i].description,
-                      price: editedList[i].price,
-                      prodTitle: editedList[i].productName,
-                      rating: editedList[i].rating,
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          categories[i],
+                          style: TextStyle(
+                            color: Color(0xff366775),
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
+              key: UniqueKey(),
+              onStretchTrigger: () async {
+                print('trigered');
+              },
+              pinned: true,
+              elevation: 0,
+
+              backgroundColor: Colors.white,
+              automaticallyImplyLeading: false,
+              expandedHeight: mediaQuery.height * 0.61,
+              // collapsedHeight: mediaQuery.height * 0.02,
+
+              // title: Text('اسم المتجر'),
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                  color: Colors.white,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: mediaQuery.height * 0.02,
+                        right: mediaQuery.width * 0.02,
+                        left: mediaQuery.width * 0.05,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            PopupMenuButton(
+                              icon: Icon(
+                                FontAwesomeIcons.filter,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              itemBuilder: (ctx) => [
+                                PopupMenuItem(
+                                  child: Text(isUrgent
+                                      ? 'الإنتقال إلى الطلبات المسبقة'
+                                      : 'الإنتقال إلى الطلبات الحالية'),
+                                ),
+                              ],
+                              onSelected: (_) {
+                                setState(() {
+                                  isUrgent = true;
+                                  sortList();
+                                });
+                                print(isUrgent);
+                                print('isUrgent');
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Typicons.shopping_cart,
+                                  size: 30,
+                                  color: Theme.of(context).primaryColor),
+                              onPressed: () {
+                                Navigator.of(context).push(PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) =>
+                                        OrdersScreen()));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30),
+                          ),
+                          child: Image.asset(
+                            'images/food1.jpg',
+                            fit: BoxFit.fill,
+                            height: mediaQuery.height * 0.3,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: mediaQuery.height * 0.2,
+                        right: mediaQuery.height * 0.01,
+                        child: Container(
+                          height: mediaQuery.height * 0.2,
+                          width: mediaQuery.width * 0.4,
+                          child: Card(
+                            color: Colors.transparent,
+                            elevation: 7,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Image.asset(
+                                'images/homemade_logo.PNG',
+                                fit: BoxFit.cover,
+                                height: mediaQuery.height * 0.3,
+                                width: mediaQuery.width * 0.3,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: mediaQuery.height * 0.25,
+                        right: mediaQuery.height * 0.26,
+                        left: mediaQuery.height * 0.02,
+                        child: Container(
+                          height: mediaQuery.height * 0.2,
+                          width: mediaQuery.width * 0.55,
+                          child: Row(
+                            children: [
+                              Text(
+                                'اسم المتجر',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff366775),
+                                ),
+                              ),
+                              Spacer(),
+                              SmoothStarRating(
+                                size: 15,
+                                color: Color(0xffFFC757),
+                                isReadOnly: true,
+                                rating: 4.5,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: mediaQuery.height * 0.41,
+                        child: Container(
+                          padding: EdgeInsets.all(12),
+                          height: mediaQuery.height * 0.16,
+                          width: mediaQuery.width,
+                          color: Color(0xffFCE8E6),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'الوصف: متجر يقدم انواع مختلفة من الحلويات و الكيك لجميع المناسبات',
+                                maxLines: null,
+                                style: TextStyle(
+                                  color: Color(0xff366775),
+                                ),
+                              ),
+                              Text(
+                                'أوقات العمل: ٠٠:٧ صباحا - ٠٠:١١ مساءا',
+                                style: TextStyle(
+                                  color: Color(0xff366775),
+                                ),
+                              ),
+                              Text(
+                                'الحالة: مفتوح',
+                                maxLines: null,
+                                style: TextStyle(
+                                  color: Color(0xff366775),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
+            // SliverAppBar(
+            //   key: UniqueKey(),
+
+            //   elevation: 0,
+            //   backgroundColor: Colors.white,
+            //   pinned: true,
+            //   automaticallyImplyLeading: false,
+            //   expandedHeight: mediaQuery.height * 0.08,
+            //   collapsedHeight: mediaQuery.height * 0.08,
+            //   toolbarHeight: mediaQuery.height * 0.0,
+            //   flexibleSpace: FlexibleSpaceBar(
+
+            //   ),
+            // ),
+            SliverList(
+                delegate: SliverChildListDelegate(
+              [
+                Container(
+                  height: mediaQuery.height * 0.79,
+                  width: mediaQuery.width,
+                  child: ListView.builder(
+                    padding: EdgeInsets.only(
+                      top: 2,
+                      bottom: 3,
+                    ),
+                    itemCount: editedList.length,
+                    itemBuilder: (ctx, i) => InkWell(
+                      splashColor: Color(0xffFCE8E6),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => OrderScreen(),
+                          ),
+                        );
+                      },
+                      child: ProductItem(
+                        description: editedList[i].description,
+                        price: editedList[i].price,
+                        prodTitle: editedList[i].productName,
+                        rating: editedList[i].rating,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ))
           ],
         ),
+        // child: Stack(
+        //   children: [
+        //     Positioned(
+        //       top: 0,
+        //       left: 0,
+        //       right: 0,
+        //       child: ClipRRect(
+        //         borderRadius: BorderRadius.only(
+        //           bottomLeft: Radius.circular(30),
+        //           bottomRight: Radius.circular(30),
+        //         ),
+        //         child: Image.asset(
+        //           'images/food1.jpg',
+        //           fit: BoxFit.fill,
+        //           height: mediaQuery.height * 0.3,
+        //         ),
+        //       ),
+        //     ),
+        //     Positioned(
+        //       top: mediaQuery.height * 0.2,
+        //       right: mediaQuery.height * 0.01,
+        //       child: Container(
+        //         height: mediaQuery.height * 0.2,
+        //         width: mediaQuery.width * 0.4,
+        //         child: Card(
+        //           color: Colors.transparent,
+        //           elevation: 7,
+        //           child: ClipRRect(
+        //             borderRadius: BorderRadius.circular(30),
+        //             child: Image.asset(
+        //               'images/homemade_logo.PNG',
+        //               fit: BoxFit.cover,
+        //               height: mediaQuery.height * 0.3,
+        //               width: mediaQuery.width * 0.3,
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     Positioned(
+        //       top: mediaQuery.height * 0.25,
+        //       right: mediaQuery.height * 0.26,
+        //       left: mediaQuery.height * 0.02,
+        //       child: Container(
+        //         height: mediaQuery.height * 0.2,
+        //         width: mediaQuery.width * 0.55,
+        //         child: Row(
+        //           children: [
+        //             Text(
+        //               'اسم المتجر',
+        //               style: TextStyle(
+        //                 fontWeight: FontWeight.bold,
+        //                 color: Color(0xff366775),
+        //               ),
+        //             ),
+        //             Spacer(),
+        //             SmoothStarRating(
+        //               size: 15,
+        //               isReadOnly: false,
+        //               rating: 4.5,
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //     Positioned(
+        //       left: 0,
+        //       right: 0,
+        //       top: mediaQuery.height * 0.41,
+        //       child: Container(
+        //         padding: EdgeInsets.all(12),
+        //         height: mediaQuery.height * 0.16,
+        //         width: mediaQuery.width,
+        //         color: Color(0xffFCE8E6),
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             Text(
+        //               'الوصف: متجر يقدم انواع مختلفة من الحلويات و الكيك لجميع المناسبات',
+        //               maxLines: null,
+        //               style: TextStyle(
+        //                 color: Color(0xff366775),
+        //               ),
+        //             ),
+        //             Text(
+        //               'أوقات العمل: ٠٠:٧ صباحا - ٠٠:١١ مساءا',
+        //               style: TextStyle(
+        //                 color: Color(0xff366775),
+        //               ),
+        //             ),
+        //             Text(
+        //               'الحالة: مفتوح',
+        //               maxLines: null,
+        //               style: TextStyle(
+        //                 color: Color(0xff366775),
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //     Positioned(
+        //       top: mediaQuery.height * 0.57,
+        //       right: 0,
+        //       left: 0,
+        //       child: Container(
+        //         height: mediaQuery.height * 0.08,
+        //         width: mediaQuery.width,
+        //         child: ListView.builder(
+        //           scrollDirection: Axis.horizontal,
+        //           itemCount: categories.length,
+        //           itemBuilder: (ctx, i) => GestureDetector(
+        //             onTap: () {
+        //               setState(() {
+        //                 categoryItem = categories[i];
+        //               });
+        //             },
+        //             child: Container(
+        //               margin: EdgeInsets.all(4),
+        //               decoration: BoxDecoration(
+        //                 borderRadius: BorderRadius.circular(20),
+        //                 color: categoryItem == categories[i]
+        //                     ? Color(0xffF4AC94)
+        //                     : null,
+        //               ),
+        //               padding: EdgeInsets.all(10),
+        //               child: Text(
+        //                 categories[i],
+        //                 style: TextStyle(color: Color(0xff366775)),
+        //               ),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     Positioned(
+        //       top: mediaQuery.height * 0.64,
+        //       right: 0,
+        //       left: 0,
+        //       bottom: 0,
+        //       child: Container(
+        //         height: mediaQuery.height * 0.61,
+        //         width: mediaQuery.width,
+        //         child: ListView.builder(
+        //           padding: EdgeInsets.only(
+        //             top: 2,
+        //             bottom: 3,
+        //           ),
+        //           itemCount: editedList.length,
+        //           itemBuilder: (ctx, i) => InkWell(
+        //             splashColor: Color(0xffFCE8E6),
+        //             onTap: () {
+        //               Navigator.of(context).push(
+        //                 PageRouteBuilder(
+        //                   pageBuilder: (_, __, ___) => OrderScreen(),
+        //                 ),
+        //               );
+        //             },
+        //             child: ProductItem(
+        //               description: editedList[i].description,
+        //               price: editedList[i].price,
+        //               prodTitle: editedList[i].productName,
+        //               rating: editedList[i].rating,
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }

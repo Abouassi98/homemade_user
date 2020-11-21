@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:homemade_user/config.dart';
-import '../../screens/finishOrder/finishOrder.dart';
+import 'package:homemade_user/screens/order_screen.dart';
+import '../finishOrder/finishOrder.dart';
+import '../../widgets/cart_item.dart';
+import '../../models/cart.dart';
 
 class OrdersScreen extends StatefulWidget {
   @override
@@ -9,6 +12,70 @@ class OrdersScreen extends StatefulWidget {
 
 class _OrdersScreenState extends State<OrdersScreen> {
   int list = 3;
+
+  List<Cart> cartItems = [
+    Cart(
+      name: 'اسم الصنف المطلوب',
+      notices: 'الملاحظات الملاحظات الملاحظات الملاحظات الملاحظات',
+      additional: [
+        "مخبوزات",
+        "حلويات",
+        "معجنات",
+        "وجبات",
+      ],
+      price: 20,
+      quantity: 4,
+    ),
+    Cart(
+      name: 'اسم الصنف المطلوب',
+      notices: 'الملاحظات الملاحظات الملاحظات الملاحظات الملاحظات',
+      additional: [
+        "مخبوزات",
+        "حلويات",
+        "معجنات",
+        "وجبات",
+      ],
+      price: 18,
+      quantity: 4,
+    ),
+    Cart(
+      name: 'اسم الصنف المطلوب',
+      notices: 'الملاحظات الملاحظات الملاحظات الملاحظات الملاحظات',
+      additional: [
+        "مخبوزات",
+        "حلويات",
+        "معجنات",
+        "وجبات",
+      ],
+      price: 17,
+      quantity: 4,
+    ),
+    Cart(
+      name: 'اسم الصنف المطلوب',
+      notices: 'الملاحظات الملاحظات الملاحظات الملاحظات الملاحظات',
+      additional: [
+        "مخبوزات",
+        "حلويات",
+        "معجنات",
+        "وجبات",
+      ],
+      price: 15,
+      quantity: 4,
+    ),
+    Cart(
+      name: 'اسم الصنف المطلوب',
+      notices: 'الملاحظات الملاحظات الملاحظات الملاحظات الملاحظات',
+      additional: [
+        "مخبوزات",
+        "حلويات",
+        "معجنات",
+        "وجبات",
+      ],
+      price: 21,
+      quantity: 4,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
@@ -17,18 +84,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
         backgroundColor: Color(0xffF3AB93),
         label: Text(
           "مخبوزات",
-          style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 10,
-              fontWeight: FontWeight.bold),
-        ),
-        selected: false,
-        onSelected: (value) {},
-      ),
-      FilterChip(
-        backgroundColor: Color(0xffF3AB93),
-        label: Text(
-          "حلويات",
           style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: 10,
@@ -82,115 +137,38 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 : ListView.builder(
                     shrinkWrap: true,
                     itemCount: list,
-                    itemBuilder: (_, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          elevation: 5,
-                          child: Container(
-                            margin:
-                                const EdgeInsets.only(left: 20.0, right: 20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'ريال',
-                                      textAlign: TextAlign.end,
-                                      style: TextStyle(
-                                        fontSize: 14,
+                    itemBuilder: (_, i) {
+                      var cart = cartItems[i];
+                      return CartItem(
+                          name: cart.name,
+                          price: cart.price,
+                          quantity: cart.quantity,
+                          notice: cart.notices,
+                          chips: cart.additional
+                              .map(
+                                (e) => FilterChip(
+                                  backgroundColor: Color(0xffF3AB93),
+                                  label: Text(
+                                    e,
+                                    style: TextStyle(
                                         color: Theme.of(context).primaryColor,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        '120',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                            color: Color.fromRGBO(
-                                                56, 104, 118, 1)),
-                                      ),
-                                    ),
-                                    Text(
-                                      'اسم الصنف المطلوب',
-                                      style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  "الكمية     4",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold),
                                   ),
+                                  selected: false,
+                                  onSelected: (value) {},
                                 ),
-                                SizedBox(height: 4),
-                                Text(
-                                  "الاضافات",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                                Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Wrap(
-                                    children: [
-                                      for (final chip in chips)
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10),
-                                          child: chip,
-                                        )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  "الملاحظات",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  " الملاحظات الملاحظات الملاحظات الملاحظات الملاحظات الملاحظات",
-                                  textDirection: TextDirection.rtl,
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 70,
-                                      height: 25,
-                                      decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: Center(
-                                        child: Text(
-                                          "حذف",
-                                          
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: 10)
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
+                              )
+                              .toList(),
+                              onDelete: (){
+                                setState(() {
+                                  cartItems.removeAt(i);
+                                });
+                              },
+                              onEdit: (){
+                                Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => OrderScreen(isEdit:true)));
+                              },);
                     }),
           ),
           SizedBox(

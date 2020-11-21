@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:homemade_user/config.dart';
 import 'package:homemade_user/providers/products/products.dart';
 import 'package:homemade_user/screens/meals_overview_screen.dart';
+import 'package:homemade_user/screens/myPlaces/pickPlace.dart';
 import 'package:provider/provider.dart';
 import '../widgets/buttonSignIn.dart';
 
@@ -61,6 +62,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  List<String> places = [
+    'المنزل',
+    'منزل صديق',
+    'العمل',
+  ];
+  List<String> addressDetails = [
+    'الرياض',
+    'الدمام',
+    'جدة',
+  ];
+  var address = '';
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
@@ -94,11 +106,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Image.asset(
                       'images/location_logo.PNG',
-                      height: mediaQuery.height * 0.14,
+                      height: mediaQuery.height * 0.19,
+                      width: mediaQuery.width,
                     ),
-                    SizedBox(
-                      height: mediaQuery.height * 0.02,
-                    ),
+                    // SizedBox(
+                    //   height: mediaQuery.height * 0.02,
+                    // ),
                     InkWell(
                       onTap: () {
                         showGeneralDialog(
@@ -127,71 +140,87 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: 300,
                                         child: ListView.builder(
                                             shrinkWrap: true,
-                                            itemCount: 4,
+                                            itemCount: places.length,
                                             itemBuilder: (_, index) {
-                                              return Column(
-                                                children: [
-                                                  Directionality(
-                                                    textDirection:
-                                                        TextDirection.rtl,
-                                                    child: TextField(
-                                                      cursorColor:
-                                                          Theme.of(context)
-                                                              .primaryColor,
-                                                      readOnly: true,
-                                                      onTap: () {},
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 18),
-                                                      decoration:
-                                                          InputDecoration(
-                                                              hintText:
-                                                                  "عنوان المكان",
-                                                              errorText: "kkkk",
-                                                              errorStyle: TextStyle(
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      400],
-                                                                  fontSize: 16),
-                                                              hintStyle: TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 16),
-                                                              suffixIcon: Icon(
-                                                                Icons.more_vert,
-                                                                color: Colors
-                                                                    .black,
-                                                              ),
-                                                              prefixIcon:
-                                                                  Material(
-                                                                elevation: 0.0,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          30),
-                                                                ),
-                                                                child: Icon(
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    address = places[index];
+                                                  });
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Directionality(
+                                                      textDirection:
+                                                          TextDirection.rtl,
+                                                      child: TextField(
+                                                        cursorColor:
+                                                            Theme.of(context)
+                                                                .primaryColor,
+                                                        readOnly: true,
+                                                        onTap: () {},
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 18),
+                                                        decoration:
+                                                            InputDecoration(
+                                                                hintText:
+                                                                    places[
+                                                                        index],
+                                                                errorText:
+                                                                    addressDetails[
+                                                                        index],
+                                                                errorStyle: TextStyle(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        400],
+                                                                    fontSize:
+                                                                        16),
+                                                                hintStyle: TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        16),
+                                                                suffixIcon:
+                                                                    Icon(
                                                                   Icons
-                                                                      .location_on,
+                                                                      .more_vert,
                                                                   color: Colors
                                                                       .black,
                                                                 ),
-                                                              ),
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              contentPadding:
-                                                                  EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          25,
-                                                                      vertical:
-                                                                          13)),
+                                                                prefixIcon:
+                                                                    Material(
+                                                                  elevation:
+                                                                      0.0,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .all(
+                                                                    Radius
+                                                                        .circular(
+                                                                            30),
+                                                                  ),
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .location_on,
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                ),
+                                                                border:
+                                                                    InputBorder
+                                                                        .none,
+                                                                contentPadding:
+                                                                    EdgeInsets.symmetric(
+                                                                        horizontal:
+                                                                            25,
+                                                                        vertical:
+                                                                            13)),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Divider()
-                                                ],
+                                                    Divider()
+                                                  ],
+                                                ),
                                               );
                                             }),
                                       ),
@@ -199,7 +228,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: SignInButton(
                                           txtColor: Colors.white,
-                                          onPressSignIn: () {},
+                                          onPressSignIn: () {
+                                            Navigator.of(context).push(
+                                              PageRouteBuilder(
+                                                pageBuilder: (_, __, ___) =>
+                                                    PickPlace(),
+                                              ),
+                                            );
+                                          },
                                           iconData: Icons
                                               .arrow_drop_down_circle_outlined,
                                           btnWidth:
@@ -238,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'التوصيل لـ',
+                              'التوصيل لـ $address',
                               style: TextStyle(
                                 fontSize: 22,
                                 color: Color(0xff366775),
@@ -269,7 +305,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       imagePath: 'images/urgent_order.PNG',
                       buttonTitle: 'اطلب الآن',
                       onPressed: () {
-                          Provider.of<Products>(context,listen: false).orderType(true);
+                        Provider.of<Products>(context, listen: false)
+                            .orderType(true);
                         Navigator.of(context).push(
                           PageRouteBuilder(
                             pageBuilder: (_, __, ___) => MealsOverviewScreen(),
@@ -285,7 +322,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       imagePath: 'images/scheduled_order.PNG',
                       buttonTitle: 'اطلب الآن واستلم لاحقاً',
                       onPressed: () {
-                          Provider.of<Products>(context,listen: false).orderType(false);
+                        Provider.of<Products>(context, listen: false)
+                            .orderType(false);
 
                         Navigator.of(context).push(
                           PageRouteBuilder(

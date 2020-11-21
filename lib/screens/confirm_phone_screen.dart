@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:homemade_user/screens/signup_screen.dart';
 import 'package:slide_countdown_clock/slide_countdown_clock.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import './signup_screen.dart';
+import './reset_password_screen.dart';
 import '../providers/auth/confirmResetCodeProvider.dart';
 import '../providers/auth/phoneVerificationProvider.dart';
 import '../providers/auth/resendCode.dart';
@@ -43,17 +44,23 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
   
   @override
   Widget build(BuildContext context) {
+    var mediaQuery =MediaQuery.of(context).size;
     
     return Scaffold(
       // resizeToAvoidBottomPadding: false,
       backgroundColor: Color(0xffFCE8E6),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+    
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Center(
+              child: Container(
+                height: mediaQuery.height * 0.4,
+                width: mediaQuery.width * 0.5,
+                decoration: BoxDecoration(),
+                child: Image.asset('images/homemade_logo.PNG'),
+              ),
+            ),
             Center(
                 child: Text(
               "تسجيل جديد",
@@ -72,52 +79,9 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
               textAlign: TextAlign.center,
             )),
             SizedBox(
-              height: 50,
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-              child: PinCodeTextField(
-                appContext: context,
-                length: 4,
-                backgroundColor:
-                    Color(0x00000000), //Theme.of(context).accentColor,
-
-                textStyle: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                pinTheme: PinTheme(
-                  activeColor: Theme.of(context).primaryColor,
-                  selectedColor: Theme.of(context).accentColor,
-                  inactiveColor: Theme.of(context).accentColor,
-                ),
-                onChanged: (code) {
-                  // if (widget.stateOfVerificationCode == 1)
-                  //   register.code = code;
-                  // else if (widget.stateOfVerificationCode == 2)
-                  //   confirmRessetCode.code = code;
-                  // else {
-                  //   changePhone.code = code;
-                  // }
-                },
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                // textInputType: TextInputType.number,
-                autoFocus: true,
-                onCompleted: (String value) {
-                  if (widget.stateOfVerificationCode == 1)
-                    // register.phoneVerification(context);
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => SignupScreen()));
-                  // else if (widget.stateOfVerificationCode == 2)
-                  //   confirmRessetCode.confirmResetCode(context);
-                  // else
-                  //   changePhone.changePhoneCode(null, context);
-                },
-              ),
-            ),
-            Visibility(
+                    width: 10,
+                  ),
+             Visibility(
               visible: resend,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -199,6 +163,58 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
                       ),
                     ],
                   ),
+            SizedBox(
+              height: 50,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
+              child: PinCodeTextField(
+                keyboardType: TextInputType.number,
+                appContext: context,
+                length: 4,
+                backgroundColor:
+                    Color(0x00000000), //Theme.of(context).accentColor,
+
+                textStyle: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Acme'
+                ),
+                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                pinTheme: PinTheme(
+                  activeColor: Theme.of(context).primaryColor,
+                  selectedColor: Theme.of(context).accentColor,
+                  inactiveColor: Theme.of(context).accentColor,
+                ),
+                onChanged: (code) {
+                  // if (widget.stateOfVerificationCode == 1)
+                  //   register.code = code;
+                  // else if (widget.stateOfVerificationCode == 2)
+                  //   confirmRessetCode.code = code;
+                  // else {
+                  //   changePhone.code = code;
+                  // }
+                },
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                // textInputType: TextInputType.number,
+                autoFocus: true,
+                onCompleted: (String value) {
+                  if (widget.stateOfVerificationCode == 1)
+                    // register.phoneVerification(context);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => SignupScreen()));
+                  else if (widget.stateOfVerificationCode == 2)
+                  Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => ResetPasswordScreen()));
+                    
+                  // else
+                  //   changePhone.changePhoneCode(null, context);
+                },
+              ),
+            ),
+           
             SizedBox(
               height: 20,
             ),

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:homemade_user/screens/personal_data_screen.dart';
 import 'package:homemade_user/screens/home_screen.dart';
 import 'package:homemade_user/screens/order_list_screen.dart';
 import 'package:homemade_user/screens/settings_screen.dart';
 
-import 'screens/edit_profile_screen.dart';
+// import 'package:homemade_user/screens/home_screen.dart';
+// import 'package:homemade_user/screens/order_list_screen.dart';
+// import 'package:homemade_user/screens/settings_screen.dart';
+enum OrderTab {
+  Applicable,
+  Scheduled,
+  Completed,
+}
 
 class Config {
   static Widget buildCardContainer({
@@ -14,7 +22,7 @@ class Config {
   }) {
     return InkWell(
       onTap: onPressed,
-          child: Card(
+      child: Card(
         elevation: 8,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),
@@ -36,7 +44,7 @@ class Config {
                   cardTitle,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 15,
                     // fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -48,53 +56,81 @@ class Config {
       ),
     );
   }
+
   static Widget buildTextFormField({
+    TextInputType type,
+    TextEditingController controller,
+    Key key,
     Color color,
     String hintText,
     void Function(String value) onChanged,
     String Function(String value) validator,
+    bool defaultColor = false,
     bool centered = false,
-    TextInputType type,
+    bool enabled = true,
+    bool secureText = false,
+    Widget suffixIcon,
+    String initialValue,
   }) {
-    return Card(
-      elevation: 7,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-      ),
-      color: color==null? Colors.white:color,
-      child: TextFormField(
-        keyboardType: type,
-        onChanged: onChanged,
-        validator: validator,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: color==null? Colors.white:color,
+    return Container(
+      // height: 50,
+      child: Card(
+        elevation: 7,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        color: Colors.white,
+        child: TextFormField(
+          initialValue: initialValue ?? '',
+          style: (type == TextInputType.number || type == TextInputType.phone)
+              ? TextStyle(
+                  fontFamily: 'Acme',
+                  color: defaultColor ? Color(0xff366775) : Color(0xffF3AB93),
+                )
+              : null,
+          obscureText: secureText,
+          keyboardType: type,
+          key: key,
+          controller: controller,
+          enabled: enabled,
+          textAlign: centered ? TextAlign.center : TextAlign.start,
+          onChanged: onChanged,
+          validator: validator,
+          decoration: InputDecoration(
+            suffixIcon: suffixIcon,
+            contentPadding:
+                EdgeInsets.symmetric(vertical: 3, horizontal: centered ? 0 : 9),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: color == null ? Colors.white : color,
+              ),
+              borderRadius: BorderRadius.circular(30),
             ),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          hintText: hintText,
-          hintStyle: TextStyle(
-            color: Color(0xffF3AB93),
-            fontSize: 20,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: color==null? Colors.white:color,
+            hintText: hintText,
+            hintStyle: TextStyle(
+              fontFamily: 'HomeMade',
+              color: defaultColor ? Color(0xff366775) : Color(0xffF3AB93),
+              fontSize: 15,
             ),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: color==null? Colors.white:color,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: color == null ? Colors.white : color,
+              ),
+              borderRadius: BorderRadius.circular(30),
             ),
-            borderRadius: BorderRadius.circular(30),
+            disabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: color == null ? Colors.white : color,
+              ),
+              borderRadius: BorderRadius.circular(30),
+            ),
           ),
         ),
       ),
     );
   }
-  static  Widget buildContainer({
+
+  static Widget buildContainer({
     Size mediaQuery,
     Widget child,
     double height,
@@ -116,6 +152,7 @@ class Config {
         height: mediaQuery.height * height,
         child: child);
   }
+
   static Widget buildBottomNavigationBar(
       {bool isSignup = false,
       @required Size mediaQuery,
@@ -147,7 +184,7 @@ class Config {
           isSignup
               ? Container()
               : IconButton(
-                onPressed: () {
+                  onPressed: () {
                     Navigator.of(context).push(
                       PageRouteBuilder(
                         pageBuilder: (_, __, ___) => OrderListScreen(),
@@ -164,10 +201,10 @@ class Config {
           isSignup
               ? Container()
               : IconButton(
-                onPressed: () {
+                  onPressed: () {
                     Navigator.of(context).push(
                       PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => EditProfileScreen(),
+                        pageBuilder: (_, __, ___) => PersonalDataScreen(),
                       ),
                     );
                   },
@@ -180,7 +217,7 @@ class Config {
           isSignup
               ? Container()
               : IconButton(
-                onPressed: () {
+                  onPressed: () {
                     Navigator.of(context).push(
                       PageRouteBuilder(
                         pageBuilder: (_, __, ___) => SettingsScreen(),
