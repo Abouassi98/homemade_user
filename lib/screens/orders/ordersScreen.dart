@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:homemade_user/config.dart';
+import 'package:homemade_user/screens/driver_search_screen.dart';
 import 'package:homemade_user/screens/order_screen.dart';
+import 'package:homemade_user/widgets/register_text_field.dart';
 import '../finishOrder/finishOrder.dart';
 import '../../widgets/cart_item.dart';
 import '../../models/cart.dart';
@@ -120,26 +122,39 @@ class _OrdersScreenState extends State<OrdersScreen> {
     return Scaffold(
       bottomNavigationBar: Config.buildBottomNavigationBar(
         mediaQuery: mediaQuery,
+        context: context,
+        isSignup: true,
       ),
       appBar: AppBar(
         title: Text("السلة"),
         centerTitle: true,
-        leading: Icon(null),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
-      body: ListView(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height / 1.4,
-            child: list == 0
-                ? Center(
-                    child: Text("السلة فارغة"),
-                  )
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: list,
-                    itemBuilder: (_, i) {
-                      var cart = cartItems[i];
-                      return CartItem(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.57,
+              child: cartItems.isEmpty
+                  ? Center(
+                      child: Text("السلة فارغة"),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: list,
+                      itemBuilder: (_, i) {
+                        var cart = cartItems[i];
+                        return CartItem(
                           name: cart.name,
                           price: cart.price,
                           quantity: cart.quantity,
@@ -160,77 +175,130 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 ),
                               )
                               .toList(),
-                              onDelete: (){
-                                setState(() {
-                                  cartItems.removeAt(i);
-                                });
-                              },
-                              onEdit: (){
-                                Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => OrderScreen(isEdit:true)));
-                              },);
-                    }),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      list = 0;
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xffF3AB93),
+                          onDelete: () {
+                            setState(() {
+                              cartItems.removeAt(i);
+                            });
+                          },
+                          onEdit: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => OrderScreen(isEdit: true),
+                              ),
+                            ).then(
+                              (value) => Navigator.of(context).pop(),
+                            );
+                          },
+                        );
+                      }),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.01,
+            ),
+            Container(
+              width: mediaQuery.width * 0.8,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: mediaQuery.width * 0.66,
+                    child: RegisterTextField(
+                      label: 'كود الخصم',
+                      type: TextInputType.text,
+                      onChange: (v) {},
+                      hint: 'قم باضافة كود الخصم ...',
                     ),
-                    width: MediaQuery.of(context).size.width / 2.5,
-                    height: 30,
-                    child: Center(
-                        child: Text(
-                      "افراغ السلة",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
+                  ),
+                  Container(
+                    width: mediaQuery.width * 0.295,
+                    child: RaisedButton(
+                      color: Theme.of(context).primaryColor,
+                      child: Text(
+                        'التحقق من الكود',
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
                       ),
-                    )),
+                      textColor: Colors.white,
+                      onPressed: () {
+                        print('sssssss');
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+                  ),
+                ].reversed.toList(),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        cartItems.clear();
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0xffF3AB93),
+                      ),
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      height: 30,
+                      child: Center(
+                          child: Text(
+                        "افراغ السلة",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      )),
+                    ),
                   ),
                 ),
-              ),
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => FinishOrder()));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xffF3AB93),
-                    ),
-                    width: MediaQuery.of(context).size.width / 2.5,
-                    height: 30,
-                    child: Center(
-                        child: Text(
-                      "تاكيد الطلب",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => DriverSearchScreen()));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0xffF3AB93),
                       ),
-                    )),
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      height: 30,
+                      child: Center(
+                          child: Text(
+                        "تاكيد الطلب",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      )),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

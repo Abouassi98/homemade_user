@@ -17,7 +17,7 @@ import './screens/settings_screen.dart';
 import 'screens/personal_data_screen.dart';
 import 'screens/order_details_screen.dart';
 import 'screens/order_summary_screen.dart';
-import './screens/order_list_screen.dart';
+import 'screens/finished_order_screen.dart';
 import './screens/family_details_screen.dart';
 import './screens/driver_search_screen.dart';
 
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: Products(),
+          value: ProductsProvider(),
         ),
         ChangeNotifierProvider.value(
           value: Families(),
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         home: MultiProvider(
           providers: [
             ChangeNotifierProvider.value(
-              value: Products(),
+              value: ProductsProvider(),
             ),
             ChangeNotifierProvider.value(
               value: ConfirmResetCodeProvider(),

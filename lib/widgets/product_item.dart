@@ -6,7 +6,14 @@ class ProductItem extends StatelessWidget {
   final String description;
   final double rating;
   final int price;
-  ProductItem({this.prodTitle, this.description, this.price, this.rating});
+  final String imageUrl;
+  ProductItem({
+    this.prodTitle,
+    this.description,
+    this.price,
+    this.rating,
+    this.imageUrl,
+  });
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
@@ -41,8 +48,8 @@ class ProductItem extends StatelessWidget {
             elevation: 7,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(30),
-              child: Image.asset(
-                'images/homemade_logo.PNG',
+              child: Image.network(
+                imageUrl,
                 fit: BoxFit.cover,
                 height: mediaQuery.height * 0.18,
                 width: mediaQuery.width * 0.23,

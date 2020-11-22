@@ -13,17 +13,18 @@ class SignInButton extends StatelessWidget {
   final double btnHeight;
   final bool load;
 
-  SignInButton(
-      {this.onPressSignIn,
-      this.buttonText,
-      this.iconData,
-      this.btnColor,
-      this.iColor,
-      this.txtColor,
-      this.btnHeight,
-      this.btnWidth,
-      this.textSize,
-      this.load = false});
+  SignInButton({
+    this.onPressSignIn,
+    this.buttonText,
+    this.iconData,
+    this.btnColor,
+    this.iColor,
+    this.txtColor,
+    this.btnHeight,
+    this.btnWidth,
+    this.textSize,
+    this.load = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +44,15 @@ class SignInButton extends StatelessWidget {
             alignment: FractionalOffset.center,
             decoration: new BoxDecoration(
               gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: btnColor != null
-                      ? [btnColor, btnColor]
-                      : [
-                          Theme.of(context).primaryColor,
-                          Theme.of(context).accentColor
-                        ]),
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: btnColor != null
+                    ? [btnColor, btnColor]
+                    : [
+                        Theme.of(context).primaryColor,
+                        Theme.of(context).accentColor
+                      ],
+              ),
               borderRadius: new BorderRadius.circular(20.0),
             ),
             child: Stack(

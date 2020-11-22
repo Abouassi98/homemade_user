@@ -174,7 +174,7 @@ class _PickPlaceState extends State<PickPlace> {
                           //         .getPlaces(Provider.of<SharedPref>(context,
                           //                 listen: false)
                           //             .token);
-                          //     Navigator.pop(context);
+                              Navigator.pop(context);
                           //   }
                           // });
                         },

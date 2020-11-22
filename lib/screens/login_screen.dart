@@ -20,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
         bottomNavigationBar: Config.buildBottomNavigationBar(
           mediaQuery: mediaQuery,
           isSignup: true,
+          context: context,
         ),
         backgroundColor: Color(0xffFCE8E6),
         appBar: AppBar(
@@ -62,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ..onTap = () {
                                   Navigator.of(context).push(
                                     PageRouteBuilder(
-                                      pageBuilder: (_, __, ___) => MobileRegisterScreen(),
+                                      pageBuilder: (_, __, ___) => MobileRegisterScreen(title: 'إستعادة كلمة المرور',),
                                     ),
                                   );
                                 },

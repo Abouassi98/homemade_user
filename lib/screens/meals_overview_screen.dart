@@ -183,7 +183,7 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
                   dotBgColor: Colors.transparent,
                   showIndicator: true,
                   overlayShadow: true,
-                  autoplay: false,
+                  // autoplay: false,
                   images: [
                     AssetImage("images/food1.jpg"),
                     AssetImage("images/food2.jpg"),

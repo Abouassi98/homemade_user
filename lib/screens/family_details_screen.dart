@@ -6,7 +6,7 @@ import 'package:homemade_user/screens/orders/ordersScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
-import '../models/product.dart';
+import '../models/product.dart' as pro;
 import '../widgets/product_item.dart';
 import 'package:homemade_user/config.dart';
 
@@ -19,33 +19,35 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
   bool isUrgent = false;
   bool isInit = true;
   String name;
-  List<Product> items;
-  List<String> categories = [
-    'الكل',
-    'وجبات',
-    'معجنات',
-    'حلويات',
-    'كب كيك',
-    'مشويات',
-    'لحم',
-  ];
+  List<pro.Datum> items;
+  List<String> get categories {
+    List<String> category = ['الكل'];
+    for (var i = 0; i < items.length; i++) {
+      if (!category.contains(items[i].categoryName)) {
+        category.add(items[i].categoryName);
+      }
+    }
+    return category;
+  }
+
   String categoryItem = 'الكل';
 
   void sortList() {
     if (isUrgent) {
-      items.sort((product1, product2) =>
-          product1.productType.index.compareTo(product2.productType.index));
+      items.sort(
+          (product1, product2) => product1.typeId.compareTo(product2.typeId));
     } else if (!isUrgent) {
-      items.sort((product1, product2) =>
-          product2.productType.index.compareTo(product1.productType.index));
+      items.sort(
+          (product1, product2) => product2.typeId.compareTo(product1.typeId));
     }
   }
 
   @override
   void didChangeDependencies() {
     if (isInit) {
-      isUrgent = Provider.of<Products>(context, listen: false).isUrgentOrder;
-      items = Provider.of<Products>(context, listen: false).items;
+      isUrgent =
+          Provider.of<ProductsProvider>(context, listen: false).isUrgentOrder;
+      items = Provider.of<ProductsProvider>(context, listen: false).items;
       sortList();
     }
     isInit = false;
@@ -55,9 +57,9 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    items = Provider.of<Products>(context).items;
-    List<Product> editedList = items.where((element) {
-      if (element.category == categoryItem) {
+    items = Provider.of<ProductsProvider>(context).items;
+    List<pro.Datum> editedList = items.where((element) {
+      if (element.categoryName == categoryItem) {
         print('hi');
         return true;
       }
@@ -166,47 +168,6 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                   child: Stack(
                     children: [
                       Positioned(
-                        top: mediaQuery.height * 0.02,
-                        right: mediaQuery.width * 0.02,
-                        left: mediaQuery.width * 0.05,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PopupMenuButton(
-                              icon: Icon(
-                                FontAwesomeIcons.filter,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              itemBuilder: (ctx) => [
-                                PopupMenuItem(
-                                  child: Text(isUrgent
-                                      ? 'الإنتقال إلى الطلبات المسبقة'
-                                      : 'الإنتقال إلى الطلبات الحالية'),
-                                ),
-                              ],
-                              onSelected: (_) {
-                                setState(() {
-                                  isUrgent = true;
-                                  sortList();
-                                });
-                                print(isUrgent);
-                                print('isUrgent');
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Typicons.shopping_cart,
-                                  size: 30,
-                                  color: Theme.of(context).primaryColor),
-                              onPressed: () {
-                                Navigator.of(context).push(PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) =>
-                                        OrdersScreen()));
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
                         top: 0,
                         left: 0,
                         right: 0,
@@ -216,7 +177,7 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                             bottomRight: Radius.circular(30),
                           ),
                           child: Image.asset(
-                            'images/food1.jpg',
+                            'images/food.jpg',
                             fit: BoxFit.fill,
                             height: mediaQuery.height * 0.3,
                           ),
@@ -306,6 +267,64 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                           ),
                         ),
                       ),
+                      Positioned(
+                        top: mediaQuery.height * 0.004,
+                        right: mediaQuery.width * 0.01,
+                        left: mediaQuery.width * 0.01,
+                        child: AppBar(
+                          actions: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 11.0,
+                              ),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white38,
+                                child: PopupMenuButton(
+                                  icon: Icon(
+                                    FontAwesomeIcons.filter,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  itemBuilder: (ctx) => [
+                                    PopupMenuItem(
+                                      child: Text(isUrgent
+                                          ? 'الإنتقال إلى الطلبات المسبقة'
+                                          : 'الإنتقال إلى الطلبات الحالية'),
+                                    ),
+                                  ],
+                                  onSelected: (_) {
+                                    setState(() {
+                                      isUrgent = true;
+                                      sortList();
+                                    });
+                                    print(isUrgent);
+                                    print('isUrgent');
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                          leading: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 11.0,
+                            ),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white38,
+                              child: IconButton(
+                                icon: Icon(Typicons.shopping_cart,
+                                    size: 30,
+                                    color: Theme.of(context).primaryColor),
+                                onPressed: () {
+                                  Navigator.of(context).push(PageRouteBuilder(
+                                      pageBuilder: (_, __, ___) =>
+                                          OrdersScreen()));
+                                },
+                              ),
+                            ),
+                          ),
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -329,7 +348,7 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                 delegate: SliverChildListDelegate(
               [
                 Container(
-                  height: mediaQuery.height * 0.79,
+                  height: mediaQuery.height * 0.8,
                   width: mediaQuery.width,
                   child: ListView.builder(
                     padding: EdgeInsets.only(
@@ -347,10 +366,11 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                         );
                       },
                       child: ProductItem(
-                        description: editedList[i].description,
+                        description: editedList[i].details,
                         price: editedList[i].price,
-                        prodTitle: editedList[i].productName,
-                        rating: editedList[i].rating,
+                        prodTitle: editedList[i].name,
+                        rating: editedList[i].rate,
+                        imageUrl: editedList[i].images[1].image,
                       ),
                     ),
                   ),

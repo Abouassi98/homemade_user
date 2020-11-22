@@ -17,6 +17,7 @@ class MobileRegisterScreen extends StatefulWidget {
 
 class _MobileRegisterScreenState extends State<MobileRegisterScreen> {
   var controller = TextEditingController();
+  var phoneNumber = '';
 
   var isRegister = false;
   var key = GlobalKey<FormFieldState>();
@@ -29,14 +30,17 @@ class _MobileRegisterScreenState extends State<MobileRegisterScreen> {
       child: Scaffold(
         // resizeToAvoidBottomPadding: false,
         backgroundColor: Color(0xffFCE8E6),
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          automaticallyImplyLeading: false,
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.transparent,
+        //   elevation: 0,
+        //   automaticallyImplyLeading: false,
+        // ),
         body: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(
+                height: mediaQuery.height*0.09,
+              ),
               Center(
                 child: Container(
                   height: mediaQuery.height * 0.4,
@@ -68,6 +72,7 @@ class _MobileRegisterScreenState extends State<MobileRegisterScreen> {
                     hintText: 'رقم الجوال',
                     validator: (value) =>
                         value.isEmpty ? 'يرجى إدخال رقم الجوال' : null,
+                    onChanged: (value)=>phoneNumber=value,
                     type: TextInputType.number),
               ),
               Container(
@@ -76,9 +81,7 @@ class _MobileRegisterScreenState extends State<MobileRegisterScreen> {
                   color: Color(0xffF3AB93),
                   child: Text('التالي'),
                   textColor: Theme.of(context).primaryColor,
-                  onPressed: isRegister
-                      ? null
-                      : () async {
+                  onPressed:  () async {
                           var isValid = key.currentState.isValid;
                           if (!isValid) {
                             print('ff');
@@ -91,7 +94,7 @@ class _MobileRegisterScreenState extends State<MobileRegisterScreen> {
                             var prefs = await SharedPreferences.getInstance();
                             await prefs.clear();
                             await prefs.setString('register-phone-number',
-                                controller.text.trim());
+                               phoneNumber.trim());
                             setState(() {
                               isRegister = false;
                             });

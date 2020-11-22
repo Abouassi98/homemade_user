@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import './Wallet/wallet.dart';
 import './personal_data_screen.dart';
 import './myPlaces/myPlaces.dart';
-import './order_list_screen.dart';
+import 'order_count_screen.dart';
 import './signup_or_login_screen.dart';
 import '../config.dart';
 
@@ -102,7 +102,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       onPressed: () {
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => OrderListScreen(),
+                            pageBuilder: (_, __, ___) => OrderCountScreen(),
                           ),
                         );
                       },
@@ -110,7 +110,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       cardTitle: 'عدد الطلبات'),
                   Config.buildCardContainer(
                     onPressed: ()async{
-                       var url = "http://telegram.me/+${201223082534}";
+                       var url = "http://telegram.me/+${5002151515}";
                       await canLaunch(url) ? launch(url) : print('No WhatsAPP');
                     },
                       mediaQuery: mediaQuery,

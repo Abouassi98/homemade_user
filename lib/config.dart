@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:homemade_user/screens/personal_data_screen.dart';
 import 'package:homemade_user/screens/home_screen.dart';
-import 'package:homemade_user/screens/order_list_screen.dart';
+import 'package:homemade_user/screens/finished_order_screen.dart';
 import 'package:homemade_user/screens/settings_screen.dart';
 
 // import 'package:homemade_user/screens/home_screen.dart';
@@ -82,7 +82,9 @@ class Config {
         color: Colors.white,
         child: TextFormField(
           initialValue: initialValue ?? '',
-          style: (type == TextInputType.number || type == TextInputType.phone)
+          style: ((type == TextInputType.number ||
+                      type == TextInputType.phone) ||
+                  initialValue != null)
               ? TextStyle(
                   fontFamily: 'Acme',
                   color: defaultColor ? Color(0xff366775) : Color(0xffF3AB93),
@@ -156,7 +158,7 @@ class Config {
   static Widget buildBottomNavigationBar(
       {bool isSignup = false,
       @required Size mediaQuery,
-      BuildContext context}) {
+      @required BuildContext context}) {
     return Container(
       height: mediaQuery.height * 0.08,
       width: mediaQuery.width,
@@ -169,7 +171,7 @@ class Config {
               ? Container()
               : IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       PageRouteBuilder(
                         pageBuilder: (_, __, ___) => HomeScreen(),
                       ),
@@ -185,9 +187,9 @@ class Config {
               ? Container()
               : IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => OrderListScreen(),
+                        pageBuilder: (_, __, ___) => FinishedOrderScreen(),
                       ),
                     );
                   },
@@ -202,7 +204,7 @@ class Config {
               ? Container()
               : IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       PageRouteBuilder(
                         pageBuilder: (_, __, ___) => PersonalDataScreen(),
                       ),
@@ -218,7 +220,7 @@ class Config {
               ? Container()
               : IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       PageRouteBuilder(
                         pageBuilder: (_, __, ___) => SettingsScreen(),
                       ),

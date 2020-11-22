@@ -36,8 +36,8 @@ class DriverItem extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-               SizedBox(
-                height: mediaQuery.height*0.02,
+              SizedBox(
+                height: mediaQuery.height * 0.02,
               ),
               SmoothStarRating(
                 rating: rating,
@@ -48,10 +48,11 @@ class DriverItem extends StatelessWidget {
             ],
           ),
           SizedBox(
-            width: mediaQuery.width*0.03,
+            width: mediaQuery.width * 0.03,
           ),
-          Column(mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 'سعر التوصيل : $deliveringPrice ريال',
@@ -61,20 +62,22 @@ class DriverItem extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: mediaQuery.height*0.02,
+                height: mediaQuery.height * 0.02,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    height: mediaQuery.height*0.03,
-                    width: mediaQuery.width*0.17,
-
+                    height: mediaQuery.height * 0.03,
+                    width: mediaQuery.width * 0.17,
                     child: RaisedButton(
                       elevation: 8,
                       color: Theme.of(context).primaryColor,
                       onPressed: onAccept,
-                      child: Text('قبول'),
+                      child: Text(
+                        'قبول',
+                        style: TextStyle(fontSize: 12),
+                      ),
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -85,13 +88,15 @@ class DriverItem extends StatelessWidget {
                     width: mediaQuery.width * 0.03,
                   ),
                   Container(
-                    height: mediaQuery.height*0.03,
-                    width: mediaQuery.width*0.17,
-
-                                      child: RaisedButton(
+                    height: mediaQuery.height * 0.03,
+                    width: mediaQuery.width * 0.17,
+                    child: RaisedButton(
                       elevation: 8,
                       color: Color(0xffD66D50),
-                      child: Text('رفض'),
+                      child: Text(
+                        'رفض',
+                        style: TextStyle(fontSize: 12),
+                     ),
                       onPressed: onRefuse,
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(

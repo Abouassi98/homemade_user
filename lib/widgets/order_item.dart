@@ -84,7 +84,7 @@ class OrderItem extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      '٢٠٢٠/ ٨/ ١٠ الاثنين',
+                      'الاثنين 10/8/2020',
                       textAlign: TextAlign.end,
                       style: TextStyle(color: Color(0xff366775)),
                     ),
@@ -94,9 +94,7 @@ class OrderItem extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            width: mediaQuery.width * 0.07,
-          ),
+          SizedBox(width: mediaQuery.width*0.02,),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -108,7 +106,7 @@ class OrderItem extends StatelessWidget {
                   child: Image.asset(
                     'images/homemade_logo.PNG',
                     height: mediaQuery.height * 0.13,
-                    width: mediaQuery.width * 0.18,
+                    width: mediaQuery.width * 0.23,
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -4,160 +4,162 @@ import 'package:homemade_user/models/product.dart';
 import '../../models/product.dart';
 import '../../models/product.dart';
 
-class Products with ChangeNotifier {
-  bool isUrgentOrder=false;
-  List<Product> _items = [
-    Product(
-      productId: 12,
-      description: 'بيتزا جامبو مع بيبسي وفراخ',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'بيتزا هت',
-      rating: 4,
-      productType: ProductType.Urgent,
-      category: 'معجنات',
+class ProductsProvider with ChangeNotifier {
+  bool isUrgentOrder = false;
+  List<Datum> _items = [
+    Datum(
+      id: 2,
+      name: "وجبة كومبو",
+      details: "وجبة كومبو بالسلطة مع الصوص الحار",
+      preparationTime: 45,
+      price: 50,
+      views: 5,
+      rate: 0.1000000000000000055511151231257827021181583404541015625,
+      typeId: 3,
+      categoryId: 4,
+      categoryName: "حلويات",
+      providerId: 9,
+      providerName: "اسرة الصلاح",
+      createdAt: "2020-10-26",
+      mainAdditions: [
+        Addition(
+          id: 28,
+          name: "بطاطس",
+          price: 4,
+        ),
+      ],
+      moreAdditions: [
+        Addition(id: 21, name: "كولا", price: 8),
+      ],
+      images: [
+        Image(
+          id: 37,
+          image:
+              "https://i.kelmeten.com/2018/05/file_9.jpg",
+        ),
+        Image(
+          id: 38,
+          image:
+              "https://i.kelmeten.com/2018/05/file_9.jpg",
+        ),
+      ],
     ),
-    Product(
-      productId: 12,
-      description: 'شعرية سريعة التحضير لكل الناس',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'اندومي',
-      rating: 4,
-      productType: ProductType.Scheduled,
-      category: 'باستا',
+    Datum(
+      id: 26,
+      name: "بيتزا بيبروني",
+      details: "بيتزا البيبروني مع الصوص الحار",
+      preparationTime: 45,
+      price: 50,
+      views: 5,
+      rate: 0.1000000000000000055511151231257827021181583404541015625,
+      typeId: 3,
+      categoryId: 4,
+      categoryName: "حلويات",
+      providerId: 9,
+      providerName: "اسرة الصلاح",
+      createdAt: "2020-10-26 13:33",
+      mainAdditions: [
+        Addition(
+          id: 28,
+          name: "بطاطس",
+          price: 4,
+        ),
+      ],
+      moreAdditions: [
+        Addition(id: 21, name: "كولا", price: 8),
+      ],
+      images: [
+        Image(
+            id: 37,
+            image:
+                "https://i.kelmeten.com/2018/05/file_9.jpg"),
+        Image(
+            id: 38,
+            image:
+                "https://i.kelmeten.com/2018/05/file_9.jpg"),
+      ],
     ),
-    Product(
-      productId: 12,
-      description:
-          'الأكلات السعودية ويصنع من الأرز',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'سليق',
-      rating: 4,
-      productType: ProductType.Scheduled,
-      category: 'وجبات',
+    Datum(
+      id: 26,
+      name: "بيتزا هت",
+      details: "بيتزا البيبروني مع الصوص الحار",
+      preparationTime: 45,
+      price: 50,
+      views: 5,
+      rate: 0.1000000000000000055511151231257827021181583404541015625,
+      typeId: 3,
+      categoryId: 4,
+      categoryName: "معجنات",
+      providerId: 9,
+      providerName: "اسرة الصلاح",
+      createdAt: "2020-10-26 13:33",
+      mainAdditions: [
+        Addition(
+          id: 28,
+          name: "بطاطس",
+          price: 4,
+        ),
+      ],
+      moreAdditions: [
+        Addition(id: 21, name: "كولا", price: 8),
+      ],
+      images: [
+        Image(
+            id: 37,
+            image:
+                "https://i.kelmeten.com/2018/05/file_9.jpg"),
+        Image(
+            id: 38,
+            image:
+                "https://i.kelmeten.com/2018/05/file_9.jpg"),
+      ],
     ),
-    Product(
-      productId: 12,
-      description:
-          'الأكلة الشعبية السعودية الأساسية',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'الفريك',
-      rating: 4,
-      productType: ProductType.Urgent,
-      category: 'مشويات',
-    ),
-    Product(
-      productId: 13,
-      description: 'كنافة عربي لفطار لذيذ',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'كنافة نابلسي',
-      rating: 3,
-      productType: ProductType.Urgent,
-      category: 'حلويات',
-    ),
-    Product(
-      productId: 13,
-      description:
-          'عصيدة الموز والخبز مع العسل والمكسرات،',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'المعصوب',
-      rating: 3,
-      productType: ProductType.Urgent,
-      category: 'وجبات',
-    ),
-    Product(
-      productId: 13,
-      description:
-          ' الأكلات السعودية المشهورة',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'الحنيذ',
-      rating: 3,
-      productType: ProductType.Scheduled,
-      category: 'لحم',
-    ),
-    Product(
-      productId: 13,
-      description: 'كنافة عربي لفطار لذيذ',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'كنافة',
-      rating: 3,
-      productType: ProductType.Scheduled,
-      category: 'حلويات',
-    ),
-   
-    Product(
-      productId: 14,
-      description: 'وجبة عربية لحم وفراخ وبيبسي',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'وجبة ميكس عربي',
-      rating: 4.5,
-      productType: ProductType.Scheduled,
-      category: 'وجبات',
-    ),
-    Product(
-      productId: 14,
-      description: 'وجبة كومبو سبايسي',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'كومبو',
-      rating: 4.5,
-      productType: ProductType.Scheduled,
-      category: 'وجبات',
-    ),
-    Product(
-      productId: 15,
-      description: 'كب كيك بنكهة الريدفيلفيت',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'كب كيك',
-      rating: 3.5,
-      productType: ProductType.Urgent,
-      category: 'كب كيك',
-    ),
-    Product(
-      productId: 15,
-      description: 'مجموعة من اشهى الحلويات',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'حلويات عربي',
-      rating: 3.5,
-      productType: ProductType.Urgent,
-      category: 'حلويات',
-    ),
-    Product(
-      productId: 15,
-      description: 'بيتزا جمبري وعصير فريش',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'بيتزا',
-      rating: 3.5,
-      productType: ProductType.Scheduled,
-      category: 'معجنات',
-    ),
-    Product(
-      productId: 15,
-      description: 'كريسبي مع كول سلو وسلطة وبيبسي',
-      imageUrl: 'images/food1.jpg',
-      price: 15,
-      productName: 'دجاج كريسبي',
-      rating: 3.5,
-      productType: ProductType.Scheduled,
-      category: 'وجبات',
+    Datum(
+      id: 26,
+      name: "بيتزا",
+      details: "بيتزا البيبروني مع الصوص الحار",
+      preparationTime: 45,
+      price: 50,
+      views: 5,
+      rate: 0.1000000000000000055511151231257827021181583404541015625,
+      typeId: 3,
+      categoryId: 4,
+      categoryName: "معجنات",
+      providerId: 9,
+      providerName: "اسرة الصلاح",
+      createdAt: "2020-10-26 13:33",
+      mainAdditions: [
+        Addition(
+          id: 28,
+          name: "بطاطس",
+          price: 4,
+        ),
+      ],
+      moreAdditions: [
+        Addition(id: 21, name: "كولا", price: 8),
+      ],
+      images: [
+        Image(
+            id: 37,
+            image:
+                "https://i.kelmeten.com/2018/05/file_9.jpg"),
+        Image(
+            id: 38,
+            image:
+                "https://i.kelmeten.com/2018/05/file_9.jpg"),
+      ],
     ),
   ];
 
-  List<Product> get items {
+  List<Datum> get items {
     return [..._items];
   }
-  void orderType(bool order){
+
+  List<Addition> get mainAdditions {
+    return _items.map((e) => null).toList();
+  }
+
+  void orderType(bool order) {
     isUrgentOrder = order;
     notifyListeners();
   }

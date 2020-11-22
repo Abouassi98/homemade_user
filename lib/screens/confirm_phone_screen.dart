@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slide_countdown_clock/slide_countdown_clock.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import './signup_screen.dart';
@@ -16,7 +17,6 @@ class ConfirmPhoneScreen extends StatefulWidget {
   ConfirmPhoneScreen({
     this.phoneNumber,
     this.stateOfVerificationCode,
-    
   });
   @override
   _ConfirmPhoneScreenState createState() => _ConfirmPhoneScreenState();
@@ -25,31 +25,36 @@ class ConfirmPhoneScreen extends StatefulWidget {
 class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
   bool resend = false;
   int timer = 1;
+  String phoneNumber = '';
+
   // PhoneVerificationProvider register;
   // ConfirmResetCodeProvider confirmRessetCode;
   // ChangePhoneCodeProvider changePhone;
   bool isInit = true;
-@override
-  void didChangeDependencies() {
-    if(isInit){
-    //   register = Provider.of<PhoneVerificationProvider>(context, listen: false);
-    // confirmRessetCode =
-    //     Provider.of<ConfirmResetCodeProvider>(context, listen: false);
-    // changePhone = Provider.of<ChangePhoneCodeProvider>(context, listen: false);
+  @override
+  void didChangeDependencies() async {
+    if (isInit) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      phoneNumber = prefs.getString('register-phone-number');
+
+      //   register = Provider.of<PhoneVerificationProvider>(context, listen: false);
+      // confirmRessetCode =
+      //     Provider.of<ConfirmResetCodeProvider>(context, listen: false);
+      // changePhone = Provider.of<ChangePhoneCodeProvider>(context, listen: false);
 
     }
     isInit = false;
     super.didChangeDependencies();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    var mediaQuery =MediaQuery.of(context).size;
-    
+    var mediaQuery = MediaQuery.of(context).size;
+
     return Scaffold(
       // resizeToAvoidBottomPadding: false,
       backgroundColor: Color(0xffFCE8E6),
-    
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -79,9 +84,9 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
               textAlign: TextAlign.center,
             )),
             SizedBox(
-                    width: 10,
-                  ),
-             Visibility(
+              width: 10,
+            ),
+            Visibility(
               visible: resend,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -158,6 +163,7 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
                           textStyle: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'Acme',
                           ),
                         ),
                       ),
@@ -166,7 +172,6 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
             SizedBox(
               height: 50,
             ),
-
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
               child: PinCodeTextField(
@@ -177,11 +182,10 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
                     Color(0x00000000), //Theme.of(context).accentColor,
 
                 textStyle: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Acme'
-                ),
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Acme'),
                 inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                 pinTheme: PinTheme(
                   activeColor: Theme.of(context).primaryColor,
@@ -201,20 +205,24 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
                 // textInputType: TextInputType.number,
                 autoFocus: true,
                 onCompleted: (String value) {
-                  if (widget.stateOfVerificationCode == 1)
+                  if (widget.stateOfVerificationCode == 1){
                     // register.phoneVerification(context);
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => SignupScreen()));
-                  else if (widget.stateOfVerificationCode == 2)
-                  Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => ResetPasswordScreen()));
-                    
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => SignupScreen(
+                              phoneNumber: phoneNumber,
+                            )));}
+                  else if (widget.stateOfVerificationCode == 2){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => ResetPasswordScreen()));
+                  }
+
                   // else
                   //   changePhone.changePhoneCode(null, context);
                 },
               ),
             ),
-           
             SizedBox(
               height: 20,
             ),

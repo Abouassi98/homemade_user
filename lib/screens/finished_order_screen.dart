@@ -3,12 +3,12 @@ import 'package:homemade_user/config.dart';
 import 'package:homemade_user/widgets/order_item.dart';
 import '../models/order.dart';
 
-class OrderListScreen extends StatefulWidget {
+class FinishedOrderScreen extends StatefulWidget {
   @override
-  _OrderListScreenState createState() => _OrderListScreenState();
+  _FinishedOrderScreenState createState() => _FinishedOrderScreenState();
 }
 
-class _OrderListScreenState extends State<OrderListScreen> {
+class _FinishedOrderScreenState extends State<FinishedOrderScreen> {
   List<Order> myOrders = [
     Order(
       title: 'اندومي',
@@ -56,6 +56,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
       ),
       appBar: AppBar(
         title: Text('الطلبات'),
+        automaticallyImplyLeading: false,
         centerTitle: true,
       ),
       body: Directionality(
