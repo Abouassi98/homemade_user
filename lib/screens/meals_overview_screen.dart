@@ -10,6 +10,7 @@ import 'package:homemade_user/screens/search_screen.dart';
 import '../widgets/meals_item.dart';
 import 'package:provider/provider.dart';
 import '../providers/families/families.dart';
+import '../widgets/showGeneralDialog.dart';
 
 enum FilterType {
   Rating,
@@ -18,6 +19,8 @@ enum FilterType {
 }
 
 class MealsOverviewScreen extends StatefulWidget {
+  final int filterType;
+  MealsOverviewScreen({this.filterType});
   @override
   _MealsOverviewScreenState createState() => _MealsOverviewScreenState();
 }
@@ -158,11 +161,8 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
               color: Colors.white,
             ),
             onPressed: () {
-                Navigator.of(context).push(PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) =>
-                                        OrdersScreen()));
-                            
-                            
+              Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => OrdersScreen()));
             },
           ),
         ],
@@ -234,17 +234,94 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
                     splashColor: Color(0xffFCE8E6),
                     onTap: () {
                       print('ss');
-                      Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => FamilyDetailsScreen(),
-                          settings: RouteSettings(
-                            name: 'name',
-                            arguments: editedList[i].name,
+                      if (i < 6) {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => FamilyDetailsScreen(filterType: widget.filterType),
+                            settings: RouteSettings(
+                              name: 'name',
+                              arguments: editedList[i].name,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        GeneraDialog().show(
+                            context,
+                            Material(
+                              child: Container(
+                                height: screenSize.height * 0.3,
+                                width: screenSize.width * 0.9,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      height: screenSize.height * 0.05,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(
+                                        12.0,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'الأسرة غير متاحة',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 12,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: screenSize.height * 0.06,
+                                            width: screenSize.width * 0.37,
+                                            child: RaisedButton(
+                                              elevation: 8,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(
+                                                'موافق',
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              textColor: Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: screenSize.width * 0.03,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ));
+                      }
                     },
                     child: MealsItem(
+                      isAvailable: i<6?true:false,
                       shopLogo: editedList[i].imageUrl,
                       title: editedList[i].name,
                       category: editedList[i].category,

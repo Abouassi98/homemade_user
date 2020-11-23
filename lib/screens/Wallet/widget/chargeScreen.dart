@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import '../../../config.dart';
+import 'dart:io' show Platform;
 import '../../../widgets/loader_btn.dart';
 import '../../../widgets/register_text_field.dart';
 
@@ -16,6 +17,9 @@ class _ChargeScreenState extends State<ChargeScreen> {
   String price;
   final _form = GlobalKey<FormState>();
   bool autoError = false;
+  int payMethod = 0;
+  String initialValue = 'اختر طرق الدفع';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,93 +37,138 @@ class _ChargeScreenState extends State<ChargeScreen> {
             ),
           ),
         ),
-        body: Form(
-            key: _form,
-            autovalidate: autoError,
-            child:Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 100,
-                        ),
-                        RegisterTextField(
-                          onChange: (v) {
-                            // paymentBloc.updateCash(int.parse(v));
-                            // price = v;
-                          },
-                          label: 'قيمة الشحن',
-                          icon: Icons.attach_money,
-                          type: TextInputType.number,
-                        ),
-                        SizedBox(height: 20),
-                        LoaderButton(
-                          load: false,
-                          text: 'شحن الآن',
+        body: SingleChildScrollView(
+                  child: Form(
+              key: _form,
+              autovalidate: autoError,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    DropdownButton(
+                      hint: Text(
+                        initialValue,
+                        style: TextStyle(
                           color: Theme.of(context).primaryColor,
-                          onTap: () {
-                            setState(() {
-                              autoError = true;
-                            });
-                            final isValid = _form.currentState.validate();
-                            if (!isValid) {
-                              return;
-                            }
-                            _form.currentState.save();
-                            // paymentBloc.add(Click());
-                          },
-                          txtColor: Colors.white,
+                          fontSize: 12,
                         ),
-                        SizedBox(height: 20),
-                        LoaderButton(
-                          load: false,
-                          text: 'الشحن عن طريق تحويل للحساب البنكي',
-                          color: Theme.of(context).primaryColor,
-                          onTap: () {
-                            setState(() {
-                              autoError = true;
-                            });
-                            final isValid = _form.currentState.validate();
-                            if (!isValid) {
-                              return;
-                            }
-                            _form.currentState.save();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (c) => BankingPay(
-                                          price: price,
-                                        )));
-                          },
-                          txtColor: Colors.white,
+                      ),
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(
+                            'Visa / MasterCard',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                          value: 2,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(
+                            'Mada',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                          value: 6,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(
+                            'Apple Pay',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                          value: 11,
                         ),
                       ],
+                      onChanged: (value) {
+                        if (value == 2) {
+                          setState(() {
+                            initialValue = 'Visa / MasterCard';
+                          });
+                        } else if (value == 6) {
+                          setState(() {
+                            initialValue = 'Mada';
+                          });
+                        } else if (value == 11) {
+                          setState(() {
+                            initialValue = 'Apple Pay';
+                          });
+                        }
+                      },
                     ),
-                  )
-            //  BlocListener<PaymentBloc, AppState>(
-            //   bloc: paymentBloc,
-            //   listener: (_, state) {
-            //     if (state is Error) {
-            //       CustomAlert().toast(context: context, title: state.msg);
-            //     } else if (state is Done) {
-            //       PaymentModel _res = state.model;
-            //       Navigator.pop(context);
-            //       Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (_) => OnlinePaymentScreen(
-            //                   url: _res.data[0].paymentUrl)));
-            //     }
-            //   },
-            //   child: BlocBuilder<PaymentBloc, AppState>(
-            //     bloc: paymentBloc,
-            //     builder: (_, state) {
-            //       return 
-            //     },
-            //   ),
-            // )
-            ));
+                    SizedBox(
+                      height: 100,
+                    ),
+                    RegisterTextField(
+                      error: (value) {
+                        if (value.isEmpty) {
+                          return "قيمة الشحن مطلوب";
+                        }
+                        if (payMethod <= 0) {
+                          return 'برجاء إختيار طريقة الشحن';
+                        }
+
+                        return null;
+                      },
+                      onChange: (v) {
+                        // paymentBloc.updateCash(int.parse(v));
+                        // price = v;
+                      },
+                      label: 'قيمة الشحن',
+                      icon: Icons.attach_money,
+                      type: TextInputType.number,
+                    ),
+                    SizedBox(height: 20),
+                    LoaderButton(
+                      load: false,
+                      text: 'شحن الآن',
+                      color: Theme.of(context).primaryColor,
+                      onTap: () {
+                        setState(() {
+                          autoError = true;
+                        });
+                        final isValid = _form.currentState.validate();
+                        if (!isValid) {
+                          return;
+                        }
+                        _form.currentState.save();
+                        // paymentBloc.add(Click());
+                      },
+                      txtColor: Colors.white,
+                    ),
+                  ],
+                ),
+              )
+              //  BlocListener<PaymentBloc, AppState>(
+              //   bloc: paymentBloc,
+              //   listener: (_, state) {
+              //     if (state is Error) {
+              //       CustomAlert().toast(context: context, title: state.msg);
+              //     } else if (state is Done) {
+              //       PaymentModel _res = state.model;
+              //       Navigator.pop(context);
+              //       Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (_) => OnlinePaymentScreen(
+              //                   url: _res.data[0].paymentUrl)));
+              //     }
+              //   },
+              //   child: BlocBuilder<PaymentBloc, AppState>(
+              //     bloc: paymentBloc,
+              //     builder: (_, state) {
+              //       return
+              //     },
+              //   ),
+              // )
+              ),
+        ));
   }
 }

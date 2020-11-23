@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:homemade_user/screens/personal_data_screen.dart';
-import 'package:homemade_user/screens/home_screen.dart';
-import 'package:homemade_user/screens/finished_order_screen.dart';
-import 'package:homemade_user/screens/settings_screen.dart';
+import './screens/order_count_screen.dart';
+import './screens/personal_data_screen.dart';
+import './screens/home_screen.dart';
+import './screens/finished_order_screen.dart';
+import './screens/settings_screen.dart';
 
 // import 'package:homemade_user/screens/home_screen.dart';
 // import 'package:homemade_user/screens/order_list_screen.dart';
@@ -12,6 +13,12 @@ enum OrderTab {
   Applicable,
   Scheduled,
   Completed,
+}
+enum PayMethod{
+  Mada,
+  ApplePay,
+  Visa,
+  Wallet,
 }
 
 class Config {
@@ -189,7 +196,7 @@ class Config {
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
                       PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => FinishedOrderScreen(),
+                        pageBuilder: (_, __, ___) => OrderCountScreen(),
                       ),
                     );
                   },

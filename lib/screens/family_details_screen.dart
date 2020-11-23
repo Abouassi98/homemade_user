@@ -11,6 +11,10 @@ import '../widgets/product_item.dart';
 import 'package:homemade_user/config.dart';
 
 class FamilyDetailsScreen extends StatefulWidget {
+  int filterType;
+  FamilyDetailsScreen({
+    this.filterType,
+  });
   @override
   _FamilyDetailsScreenState createState() => _FamilyDetailsScreenState();
 }
@@ -33,13 +37,42 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
   String categoryItem = 'الكل';
 
   void sortList() {
-    if (isUrgent) {
-      items.sort(
-          (product1, product2) => product1.typeId.compareTo(product2.typeId));
-    } else if (!isUrgent) {
-      items.sort(
-          (product1, product2) => product2.typeId.compareTo(product1.typeId));
+    if (widget.filterType == 1) {
+      items.sort((item1, item2) {
+        if (widget.filterType == item1.typeId) {
+          print('-1');
+          return -1;
+        } else if (item1.typeId == 3) {
+          print('0');
+
+          return 0;
+        } else {
+          print('1');
+
+          return 1;
+        }
+      });
+    } else {
+      items.sort((item1, item2) {
+        if (widget.filterType == item2.typeId) {
+          print('-1');
+          return -1;
+        } else if (item2.typeId == 3) {
+          print('0');
+
+          return 0;
+        } else {
+          print('1');
+
+          return 1;
+        }
+      });
     }
+
+    for (var i = 0; i < items.length; i++) {
+      print(items[i].typeId);
+    }
+    print('sored');
   }
 
   @override
@@ -48,7 +81,9 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
       isUrgent =
           Provider.of<ProductsProvider>(context, listen: false).isUrgentOrder;
       items = Provider.of<ProductsProvider>(context, listen: false).items;
-      sortList();
+      setState(() {
+        sortList();
+      });
     }
     isInit = false;
 
@@ -57,6 +92,7 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.filterType);
     items = Provider.of<ProductsProvider>(context).items;
     List<pro.Datum> editedList = items.where((element) {
       if (element.categoryName == categoryItem) {
@@ -286,16 +322,30 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                   ),
                                   itemBuilder: (ctx) => [
                                     PopupMenuItem(
-                                      child: Text(isUrgent
-                                          ? 'الإنتقال إلى الطلبات المسبقة'
-                                          : 'الإنتقال إلى الطلبات الحالية'),
+                                      child: Text(
+                                        widget.filterType == 1
+                                            ? 'الإنتقال إلى الطلبات المسبقة'
+                                            : 'الإنتقال إلى الطلبات الحالية',
+                                      ),
+                                      value: widget.filterType,
                                     ),
                                   ],
-                                  onSelected: (_) {
-                                    setState(() {
-                                      isUrgent = true;
-                                      sortList();
-                                    });
+                                  onSelected: (value) {
+                                    print('ggg');
+                                    print(widget.filterType);
+
+                                    if (widget.filterType == 1) {
+                                      setState(() {
+                                        widget.filterType = 2;
+                                        print(widget.filterType);
+                                        sortList();
+                                      });
+                                    } else {
+                                      setState(() {
+                                        widget.filterType = 1;
+                                        sortList();
+                                      });
+                                    }
                                     print(isUrgent);
                                     print('isUrgent');
                                   },
@@ -358,13 +408,18 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                     itemCount: editedList.length,
                     itemBuilder: (ctx, i) => InkWell(
                       splashColor: Color(0xffFCE8E6),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => OrderScreen(),
-                          ),
-                        );
-                      },
+                      onTap: (editedList[i].typeId == widget.filterType ||
+                              editedList[i].typeId == 3)
+                          ? () {
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (_, __, ___) => OrderScreen(
+                                    sku: editedList[i].sku,
+                                  ),
+                                ),
+                              );
+                            }
+                          : null,
                       child: ProductItem(
                         description: editedList[i].details,
                         price: editedList[i].price,

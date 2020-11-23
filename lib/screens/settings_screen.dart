@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homemade_user/screens/finished_order_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './Wallet/wallet.dart';
 import './personal_data_screen.dart';
@@ -102,17 +103,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       onPressed: () {
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => OrderCountScreen(),
+                            pageBuilder: (_, __, ___) => FinishedOrderScreen(),
                           ),
                         );
                       },
                       mediaQuery: mediaQuery,
                       cardTitle: 'عدد الطلبات'),
                   Config.buildCardContainer(
-                    onPressed: ()async{
-                       var url = "http://telegram.me/+${5002151515}";
-                      await canLaunch(url) ? launch(url) : print('No WhatsAPP');
-                    },
+                      onPressed: () async {
+                        var url = "http://telegram.me/+${5002151515}";
+                        await canLaunch(url)
+                            ? launch(url)
+                            : print('No WhatsAPP');
+                      },
                       mediaQuery: mediaQuery,
                       cardTitle: 'تواصل معنا عبر تيليجرام'),
                   Config.buildCardContainer(

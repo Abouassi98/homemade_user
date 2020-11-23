@@ -237,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           .orderType(true);
                       Navigator.of(context).push(
                         PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => MealsOverviewScreen(),
+                          pageBuilder: (_, __, ___) => MealsOverviewScreen(filterType: 1),
                         ),
                       );
                     },
@@ -255,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       Navigator.of(context).push(
                         PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => MealsOverviewScreen(),
+                          pageBuilder: (_, __, ___) => MealsOverviewScreen(filterType: 2),
                         ),
                       );
                     },

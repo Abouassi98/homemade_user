@@ -8,6 +8,8 @@ class ProductsProvider with ChangeNotifier {
   bool isUrgentOrder = false;
   List<Datum> _items = [
     Datum(
+      sku:15,
+      
       id: 2,
       name: "وجبة كومبو",
       details: "وجبة كومبو بالسلطة مع الصوص الحار",
@@ -15,7 +17,7 @@ class ProductsProvider with ChangeNotifier {
       price: 50,
       views: 5,
       rate: 0.1000000000000000055511151231257827021181583404541015625,
-      typeId: 3,
+      typeId: 1,
       categoryId: 4,
       categoryName: "حلويات",
       providerId: 9,
@@ -45,6 +47,45 @@ class ProductsProvider with ChangeNotifier {
       ],
     ),
     Datum(
+      sku: 12,
+      id: 2,
+      name: "وجبة شاورما",
+      details: "وجبة شاورما بالسلطة مع الصوص الحار",
+      preparationTime: 45,
+      price: 50,
+      views: 5,
+      rate: 0.1000000000000000055511151231257827021181583404541015625,
+      typeId: 1,
+      categoryId: 4,
+      categoryName: "حلويات",
+      providerId: 9,
+      providerName: "اسرة الصلاح",
+      createdAt: "2020-10-26",
+      mainAdditions: [
+        Addition(
+          id: 28,
+          name: "بطاطس",
+          price: 4,
+        ),
+      ],
+      moreAdditions: [
+        Addition(id: 21, name: "كولا", price: 8),
+      ],
+      images: [
+        Image(
+          id: 37,
+          image:
+              "https://i.kelmeten.com/2018/05/file_9.jpg",
+        ),
+        Image(
+          id: 38,
+          image:
+              "https://i.kelmeten.com/2018/05/file_9.jpg",
+        ),
+      ],
+    ),
+    Datum(
+      sku:10,
       id: 26,
       name: "بيتزا بيبروني",
       details: "بيتزا البيبروني مع الصوص الحار",
@@ -52,7 +93,7 @@ class ProductsProvider with ChangeNotifier {
       price: 50,
       views: 5,
       rate: 0.1000000000000000055511151231257827021181583404541015625,
-      typeId: 3,
+      typeId: 2,
       categoryId: 4,
       categoryName: "حلويات",
       providerId: 9,
@@ -80,8 +121,45 @@ class ProductsProvider with ChangeNotifier {
       ],
     ),
     Datum(
+      sku:8,
       id: 26,
       name: "بيتزا هت",
+      details: "بيتزا البيبروني مع الصوص الحار",
+      preparationTime: 45,
+      price: 50,
+      views: 5,
+      rate: 0.1000000000000000055511151231257827021181583404541015625,
+      typeId: 2,
+      categoryId: 4,
+      categoryName: "معجنات",
+      providerId: 9,
+      providerName: "اسرة الصلاح",
+      createdAt: "2020-10-26 13:33",
+      mainAdditions: [
+        Addition(
+          id: 28,
+          name: "بطاطس",
+          price: 4,
+        ),
+      ],
+      moreAdditions: [
+        Addition(id: 21, name: "كولا", price: 8),
+      ],
+      images: [
+        Image(
+            id: 37,
+            image:
+                "https://i.kelmeten.com/2018/05/file_9.jpg"),
+        Image(
+            id: 38,
+            image:
+                "https://i.kelmeten.com/2018/05/file_9.jpg"),
+      ],
+    ),
+    Datum(
+      sku:0,
+      id: 26,
+      name: "بيتزا",
       details: "بيتزا البيبروني مع الصوص الحار",
       preparationTime: 45,
       price: 50,
@@ -115,9 +193,10 @@ class ProductsProvider with ChangeNotifier {
       ],
     ),
     Datum(
+      sku:0,
       id: 26,
-      name: "بيتزا",
-      details: "بيتزا البيبروني مع الصوص الحار",
+      name: "كنافة نابلسية",
+      details: "كنافة نابلسية",
       preparationTime: 45,
       price: 50,
       views: 5,

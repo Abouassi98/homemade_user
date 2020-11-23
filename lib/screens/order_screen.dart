@@ -10,8 +10,10 @@ import '../widgets/showGeneralDialog.dart';
 
 class OrderScreen extends StatefulWidget {
   final bool isEdit;
+  final int sku;
   OrderScreen({
     this.isEdit = false,
+    this.sku,
   });
   @override
   _OrderScreenState createState() => _OrderScreenState();
@@ -19,6 +21,7 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   int quantity = 1;
+  String get status => widget.sku > 0 ? 'متوفر' : 'غير متاح';
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
@@ -175,14 +178,14 @@ class _OrderScreenState extends State<OrderScreen> {
                               ),
                             ),
                             Text(
-                              'الحالة: متوفر',
+                              'الحالة: $status',
                               maxLines: null,
                               style: TextStyle(
                                 color: Color(0xff366775),
                               ),
                             ),
                             Text(
-                              'عدد الطلبات: 40 طلب',
+                              'عدد الطلبات: ${widget.sku} طلب',
                               maxLines: null,
                               style: TextStyle(
                                 color: Color(0xff366775),
@@ -306,9 +309,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    setState(() {
-                                      quantity++;
-                                    });
+                                    if (quantity < widget.sku) {
+                                      setState(() {
+                                        quantity++;
+                                      });
+                                    }
                                   },
                                   child: Container(
                                     height: mediaQuery.height * 0.04,
@@ -423,157 +428,182 @@ class _OrderScreenState extends State<OrderScreen> {
                       SizedBox(
                         height: mediaQuery.height * 0.02,
                       ),
-                      Center(
-                        child: Container(
-                          width: mediaQuery.width * 0.3,
-                          decoration: BoxDecoration(),
-                          child: RaisedButton(
-                            elevation: 8,
-                            color: Color(0xffF3AB93),
-                            onPressed: () {
-                              if (widget.isEdit) {
-                                Navigator.of(context).pop();
-                              } else {
-                                GeneraDialog().show(
-                                    context,
-                                    Material(
-                                      child: Container(
-                                        height: mediaQuery.height * 0.3,
-                                        width: mediaQuery.width * 0.9,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(40),
-                                        ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                              height: mediaQuery.height * 0.05,
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.all(
-                                                12.0,
+                      widget.sku == 0
+                          ? Container()
+                          : Center(
+                              child: Container(
+                                width: mediaQuery.width * 0.3,
+                                decoration: BoxDecoration(),
+                                child: RaisedButton(
+                                  elevation: 8,
+                                  color: Color(0xffF3AB93),
+                                  onPressed: () {
+                                    if (widget.isEdit) {
+                                      Navigator.of(context).pop();
+                                    } else {
+                                      GeneraDialog().show(
+                                          context,
+                                          Material(
+                                            child: Container(
+                                              height: mediaQuery.height * 0.3,
+                                              width: mediaQuery.width * 0.9,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(40),
                                               ),
-                                              child: Center(
-                                                child: Text(
-                                                  'هل تريد متابعة التسوق؟',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                bottom: 12,
-                                              ),
-                                              child: Row(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  Container(
+                                                  SizedBox(
                                                     height: mediaQuery.height *
-                                                        0.06,
-                                                    width:
-                                                        mediaQuery.width * 0.37,
-                                                    child: RaisedButton(
-                                                      elevation: 8,
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .push(
-                                                          PageRouteBuilder(
-                                                            pageBuilder: (_, __,
-                                                                    ___) =>
-                                                                OrdersScreen(),
-                                                          ),
-                                                        );
-                                                      },
+                                                        0.05,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                      12.0,
+                                                    ),
+                                                    child: Center(
                                                       child: Text(
-                                                        'متابعة التسوق',
+                                                        'هل تريد متابعة التسوق؟',
                                                         style: TextStyle(
-                                                            fontSize: 12),
-                                                      ),
-                                                      textColor: Colors.white,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                  SizedBox(
-                                                    width:
-                                                        mediaQuery.width * 0.03,
-                                                  ),
-                                                  Container(
-                                                    height: mediaQuery.height *
-                                                        0.06,
-                                                    width:
-                                                        mediaQuery.width * 0.37,
-                                                    child: RaisedButton(
-                                                      elevation: 8,
-                                                      color: Color(0xffD66D50),
-                                                      child: Text(
-                                                        'إكمال عملية الشراء',
-                                                        style: TextStyle(
-                                                            fontSize: 12),
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .push(
-                                                          PageRouteBuilder(
-                                                            pageBuilder: (_, __,
-                                                                    ___) =>
-                                                                OrdersScreen(),
-                                                          ),
-                                                        );
-                                                      },
-                                                      textColor: Colors.white,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                      ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                      bottom: 12,
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    width:
-                                                        mediaQuery.width * 0.03,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Container(
+                                                          height: mediaQuery
+                                                                  .height *
+                                                              0.06,
+                                                          width:
+                                                              mediaQuery.width *
+                                                                  0.37,
+                                                          child: RaisedButton(
+                                                            elevation: 8,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .push(
+                                                                PageRouteBuilder(
+                                                                  pageBuilder: (_,
+                                                                          __,
+                                                                          ___) =>
+                                                                      FamilyDetailsScreen(),
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Text(
+                                                              'متابعة التسوق',
+                                                              style: TextStyle(
+                                                                  fontSize: 12),
+                                                            ),
+                                                            textColor:
+                                                                Colors.white,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          15),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              mediaQuery.width *
+                                                                  0.03,
+                                                        ),
+                                                        Container(
+                                                          height: mediaQuery
+                                                                  .height *
+                                                              0.06,
+                                                          width:
+                                                              mediaQuery.width *
+                                                                  0.37,
+                                                          child: RaisedButton(
+                                                            elevation: 8,
+                                                            color: Color(
+                                                                0xffD66D50),
+                                                            child: Text(
+                                                              'إكمال عملية الشراء',
+                                                              style: TextStyle(
+                                                                  fontSize: 12),
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .push(
+                                                                PageRouteBuilder(
+                                                                  pageBuilder: (_,
+                                                                          __,
+                                                                          ___) =>
+                                                                      OrdersScreen(),
+                                                                ),
+                                                              );
+                                                            },
+                                                            textColor:
+                                                                Colors.white,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          15),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              mediaQuery.width *
+                                                                  0.03,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                    ));
-                              }
+                                          ));
+                                    }
 
-                              // Navigator.of(context).push(
-                              //   PageRouteBuilder(
-                              //     pageBuilder: (_, __, ___) =>
-                              //         DriverSearchScreen(),
-                              //   ),
-                              // );
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
+                                    // Navigator.of(context).push(
+                                    //   PageRouteBuilder(
+                                    //     pageBuilder: (_, __, ___) =>
+                                    //         DriverSearchScreen(),
+                                    //   ),
+                                    // );
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: Text(
+                                      widget.isEdit ? 'تحديث' : 'أضف للسلة'),
+                                  textColor: Theme.of(context).primaryColor,
+                                ),
+                              ),
                             ),
-                            child: Text(widget.isEdit ? 'تحديث' : 'أضف للسلة'),
-                            textColor: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),

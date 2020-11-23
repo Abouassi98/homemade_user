@@ -7,8 +7,10 @@ class RegisterTextField extends StatefulWidget {
   final String hint;
   final String errorText;
   final Function onChange;
-  final Function error;
+  final String Function(String value) error;
   final String init;
+  final Widget suffixIcon;
+  final int payMethod;
 
   const RegisterTextField(
       {Key key,
@@ -18,7 +20,10 @@ class RegisterTextField extends StatefulWidget {
       this.hint,
       this.errorText,
       this.onChange,
-      this.error, this.init})
+      this.error,
+      this.init,
+      this.suffixIcon,
+      this.payMethod})
       : super(key: key);
 
   @override
@@ -33,17 +38,33 @@ class _RegisterTextFieldState extends State<RegisterTextField> {
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: TextFormField(
+            style: TextStyle(
+              fontFamily: (widget.type == TextInputType.number ||
+                      widget.type == TextInputType.phone)
+                  ? 'Acme'
+                  : 'HomeMade',
+              color: Theme.of(context).primaryColor,
+            ),
             initialValue: widget.init,
             textAlign: TextAlign.right,
-            keyboardType:widget.hint ==  'رقم الجوال'? TextInputType.number : widget.type,
+            keyboardType: widget.hint == 'رقم الجوال'
+                ? TextInputType.number
+                : widget.type,
             onChanged: widget.onChange,
-            validator: (value) {
-              if (value.isEmpty) {
-                return "${widget.hint == null ? widget.label : widget.hint } مطلوب";
-              }
-              return null;
-            },
+            validator: widget.error != null
+                ? widget.error
+                : (value) {
+                    if (value.isEmpty) {
+                      return "${widget.hint == null ? widget.label : widget.hint} مطلوب";
+                    }
+
+                    return null;
+                  },
             decoration: InputDecoration(
+              labelStyle: TextStyle(
+                fontFamily: 'HomeMade',
+              ),
+              suffixIcon: widget.suffixIcon,
               prefixIcon: widget.icon != null
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),
