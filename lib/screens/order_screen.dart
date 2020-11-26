@@ -1,3 +1,4 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:homemade_user/config.dart';
 import 'package:homemade_user/screens/driver_search_screen.dart';
@@ -44,7 +45,9 @@ class _OrderScreenState extends State<OrderScreen> {
                 size: 30,
                 color: Theme.of(context).primaryColor,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
           ),
         ),
@@ -60,7 +63,7 @@ class _OrderScreenState extends State<OrderScreen> {
                     size: 30, color: Theme.of(context).primaryColor),
                 onPressed: () {
                   Navigator.of(context).push(PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => OrdersScreen()));
+                      pageBuilder: (_, __, ___) => OrdersScreen(hideOptions: false,)));
                 },
               ),
             ),
@@ -83,10 +86,24 @@ class _OrderScreenState extends State<OrderScreen> {
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
                 ),
-                child: Image.asset(
-                  'images/food.jpg',
-                  fit: BoxFit.fill,
+                child: Container(
                   height: mediaQuery.height * 0.3,
+                  child: Carousel(
+                    boxFit: BoxFit.cover,
+                    dotColor: Color(0xffF4AC94).withOpacity(0.8),
+                    dotSize: 5.5,
+                    dotSpacing: 16.0,
+                    dotBgColor: Colors.transparent,
+                    showIndicator: true,
+                    overlayShadow: true,
+                    // autoplay: false,
+                    images: [
+                      AssetImage("images/food.jpg"),
+                      AssetImage("images/food.jpg"),
+                      AssetImage("images/food.jpg"),
+                      AssetImage("images/food.jpg"),
+                    ],
+                  ),
                 ),
               ),
             ),

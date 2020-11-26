@@ -58,7 +58,7 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
       );
     } else if (filterType == FilterType.MostOrdered) {
       editedList.sort(
-        (family1, family2) => family2.distance.compareTo(
+        (family1, family2) => family2.orderCount.compareTo(
           family1.orderCount,
         ),
       );
@@ -162,7 +162,7 @@ class _MealsOverviewScreenState extends State<MealsOverviewScreen>
             ),
             onPressed: () {
               Navigator.of(context).push(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => OrdersScreen()));
+                  pageBuilder: (_, __, ___) => OrdersScreen(hideOptions: false,)));
             },
           ),
         ],

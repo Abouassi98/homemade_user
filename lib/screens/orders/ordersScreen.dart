@@ -8,6 +8,10 @@ import '../../widgets/cart_item.dart';
 import '../../models/cart.dart';
 
 class OrdersScreen extends StatefulWidget {
+  final bool hideOptions;
+  OrdersScreen({
+    this.hideOptions = true,
+  });
   @override
   _OrdersScreenState createState() => _OrdersScreenState();
 }
@@ -123,7 +127,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       bottomNavigationBar: Config.buildBottomNavigationBar(
         mediaQuery: mediaQuery,
         context: context,
-        isSignup: true,
+        isSignup: widget.hideOptions,
       ),
       appBar: AppBar(
         title: Text("السلة"),
@@ -184,7 +188,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => OrderScreen(isEdit: true),
+                                builder: (_) => OrderScreen(
+                                  isEdit: true,
+                                  sku: 4,
+                                ),
                               ),
                             ).then(
                               (value) => Navigator.of(context).pop(),
@@ -196,6 +203,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             SizedBox(
               height: mediaQuery.height * 0.01,
             ),
+            if(cartItems.isNotEmpty)
             Container(
               width: mediaQuery.width * 0.8,
               child: Row(
@@ -268,6 +276,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     ),
                   ),
                 ),
+                if(cartItems.isNotEmpty)
                 Center(
                   child: InkWell(
                     onTap: () {

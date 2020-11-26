@@ -46,6 +46,7 @@ dependencies:
   slide_countdown_clock:
   smooth_star_rating:
   splash_screen_view:
+  toast:  
   typicons_flutter:
   url_launcher:
   webview_flutter:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../config.dart';
 import 'dart:io' show Platform;
 import '../../../widgets/loader_btn.dart';
@@ -19,6 +20,53 @@ class _ChargeScreenState extends State<ChargeScreen> {
   bool autoError = false;
   int payMethod = 0;
   String initialValue = 'اختر طرق الدفع';
+  List<DropdownMenuItem> get items {
+    List<dynamic> payMethod = [
+      {
+        'method': 'Visa / MasterCard',
+        'value': 2,
+      },
+      {
+        'method': 'Mada',
+        'value': 6,
+      },
+      {
+        'method': 'Apple Pay',
+        'value': 11,
+      },
+    ];
+    List<DropdownMenuItem> myItems = [];
+    for (var i = 0; i < payMethod.length; i++) {
+      if (Platform.isAndroid && payMethod[i]['value'] != 11) {
+        myItems.add(
+          DropdownMenuItem(
+            child: Text(
+              payMethod[i]['method'],
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 12,
+              ),
+            ),
+            value: payMethod[i]['value'],
+          ),
+        );
+      } else if (Platform.isIOS) {
+        myItems.add(
+          DropdownMenuItem(
+            child: Text(
+              payMethod[i]['method'],
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 12,
+              ),
+            ),
+            value: payMethod[i]['value'],
+          ),
+        );
+      }
+    }
+    return myItems;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +86,7 @@ class _ChargeScreenState extends State<ChargeScreen> {
           ),
         ),
         body: SingleChildScrollView(
-                  child: Form(
+          child: Form(
               key: _form,
               autovalidate: autoError,
               child: Padding(
@@ -47,6 +95,9 @@ class _ChargeScreenState extends State<ChargeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                    ),
                     DropdownButton(
                       hint: Text(
                         initialValue,
@@ -55,38 +106,7 @@ class _ChargeScreenState extends State<ChargeScreen> {
                           fontSize: 12,
                         ),
                       ),
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(
-                            'Visa / MasterCard',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                          value: 2,
-                        ),
-                        DropdownMenuItem(
-                          child: Text(
-                            'Mada',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                          value: 6,
-                        ),
-                        DropdownMenuItem(
-                          child: Text(
-                            'Apple Pay',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                          value: 11,
-                        ),
-                      ],
+                      items: items,
                       onChanged: (value) {
                         if (value == 2) {
                           setState(() {
@@ -96,7 +116,7 @@ class _ChargeScreenState extends State<ChargeScreen> {
                           setState(() {
                             initialValue = 'Mada';
                           });
-                        } else if (value == 11) {
+                        } else if (value == 11 && Platform.isIOS) {
                           setState(() {
                             initialValue = 'Apple Pay';
                           });
@@ -104,14 +124,14 @@ class _ChargeScreenState extends State<ChargeScreen> {
                       },
                     ),
                     SizedBox(
-                      height: 100,
+                      height: 50,
                     ),
                     RegisterTextField(
                       error: (value) {
                         if (value.isEmpty) {
                           return "قيمة الشحن مطلوب";
                         }
-                        if (payMethod <= 0) {
+                        if (initialValue == 'اختر طرق الدفع') {
                           return 'برجاء إختيار طريقة الشحن';
                         }
 
@@ -139,6 +159,8 @@ class _ChargeScreenState extends State<ChargeScreen> {
                           return;
                         }
                         _form.currentState.save();
+                        // Fluttertoast.showToast(msg: 'تم الشحن');
+                        Navigator.of(context).pop();
                         // paymentBloc.add(Click());
                       },
                       txtColor: Colors.white,

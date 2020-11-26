@@ -1,3 +1,4 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:homemade_user/providers/products/products.dart';
@@ -212,10 +213,24 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                             bottomLeft: Radius.circular(30),
                             bottomRight: Radius.circular(30),
                           ),
-                          child: Image.asset(
-                            'images/food.jpg',
-                            fit: BoxFit.fill,
-                            height: mediaQuery.height * 0.3,
+                          child: Container(
+                            height: mediaQuery.height*0.3,
+                            child: Carousel(
+                              boxFit: BoxFit.cover,
+                              dotColor: Color(0xffF4AC94).withOpacity(0.8),
+                              dotSize: 5.5,
+                              dotSpacing: 16.0,
+                              dotBgColor: Colors.transparent,
+                              showIndicator: true,
+                              overlayShadow: true,
+                              // autoplay: false,
+                              images: [
+                                AssetImage("images/food.jpg"),
+                                AssetImage("images/food.jpg"),
+                                AssetImage("images/food.jpg"),
+                                AssetImage("images/food.jpg"),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -365,8 +380,9 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                     color: Theme.of(context).primaryColor),
                                 onPressed: () {
                                   Navigator.of(context).push(PageRouteBuilder(
-                                      pageBuilder: (_, __, ___) =>
-                                          OrdersScreen()));
+                                      pageBuilder: (_, __, ___) => OrdersScreen(
+                                            hideOptions: false,
+                                          )));
                                 },
                               ),
                             ),

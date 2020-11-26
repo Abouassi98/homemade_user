@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:homemade_user/screens/myPlaces/pickPlace.dart';
 import 'package:provider/provider.dart';
-
 
 class MyPlacesCard extends StatefulWidget {
   final int index;
@@ -35,16 +35,14 @@ class _MyPlacesCardState extends State<MyPlacesCard> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(right: 8.0),
-                      child: Text(
-                         "عنوان",
+                      child: Text("عنوان",
                           style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: Colors.black)),
                     ),
                     SizedBox(height: 10),
-                    Text(
-                       "تفاصيل العنوان",
+                    Text("تفاصيل العنوان",
                         textAlign: TextAlign.right,
                         style: TextStyle(fontSize: 13)),
                   ],
@@ -52,10 +50,62 @@ class _MyPlacesCardState extends State<MyPlacesCard> {
               ),
             ),
           ),
+          // actions: [
+          //   InkWell(
+          //     onTap: () {
+          //       // Provider.of<DeletePlaceProvider>(context,listen: false).deletePlace(
+          //       //   Provider.of<SharedPref>(context,listen: false).token,
+          //       //   Provider.of<MyAddressProvider>(context, listen: false).adress[widget.index].id.toString(),
+          //       //   context).then((v){
+          //       //     if(v == true)
+          //       //      Provider.of<MyAddressProvider>(context, listen: false).getPlaces(
+          //       //        Provider.of<SharedPref>(context,listen: false).token);
+          //       //   });
+          //       Navigator.of(context).push(
+          //         PageRouteBuilder(
+          //           pageBuilder: (_,__,___)=>PickPlace(),
+          //         ),
+          //       );
+          //     },
+          //     child: Material(
+          //       shape: CircleBorder(),
+          //       color: Colors.redAccent,
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(15),
+          //         child: Icon(Icons.edit, color: Colors.white),
+          //       ),
+          //     ),
+          //   ),
+          // ],
           secondaryActions: <Widget>[
             InkWell(
-              onTap: (){
-                // Provider.of<DeletePlaceProvider>(context,listen: false).deletePlace( 
+              onTap: () {
+                // Provider.of<DeletePlaceProvider>(context,listen: false).deletePlace(
+                //   Provider.of<SharedPref>(context,listen: false).token,
+                //   Provider.of<MyAddressProvider>(context, listen: false).adress[widget.index].id.toString(),
+                //   context).then((v){
+                //     if(v == true)
+                //      Provider.of<MyAddressProvider>(context, listen: false).getPlaces(
+                //        Provider.of<SharedPref>(context,listen: false).token);
+                //   });
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => PickPlace(),
+                  ),
+                );
+              },
+              child: Material(
+                shape: CircleBorder(),
+                color: Theme.of(context).primaryColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Icon(Icons.edit, color: Colors.white),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                // Provider.of<DeletePlaceProvider>(context,listen: false).deletePlace(
                 //   Provider.of<SharedPref>(context,listen: false).token,
                 //   Provider.of<MyAddressProvider>(context, listen: false).adress[widget.index].id.toString(),
                 //   context).then((v){

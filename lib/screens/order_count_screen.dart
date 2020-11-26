@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homemade_user/screens/order_details_screen.dart';
 import '../widgets/order_item.dart';
 import '../models/order.dart';
 import '../config.dart';
@@ -58,6 +59,10 @@ class _OrderCountScreenState extends State<OrderCountScreen> {
         myOrders.where((element) => element.orderType == tab).toList();
     var mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
+      bottomNavigationBar: Config.buildBottomNavigationBar(
+        mediaQuery: mediaQuery,
+        context: context,
+      ),
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
@@ -75,7 +80,7 @@ class _OrderCountScreenState extends State<OrderCountScreen> {
       ),
       body: Directionality(
         textDirection: TextDirection.rtl,
-              child: Column(
+        child: Column(
           children: [
             SizedBox(
               height: mediaQuery.height * 0.02,
@@ -168,12 +173,22 @@ class _OrderCountScreenState extends State<OrderCountScreen> {
                   child: Column(
                       children: editedOrder
                           .map(
-                            (order) => OrderItem(
-                              title: order.title,
-                              imageUrl: order.imageUrl,
-                              date: order.date,
-                              price: order.price,
-                              status: order.status,
+                            (order) => InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) =>
+                                        OrderDetailsScreen(),
+                                  ),
+                                );
+                              },
+                              child: OrderItem(
+                                title: order.title,
+                                imageUrl: order.imageUrl,
+                                date: order.date,
+                                price: order.price,
+                                status: order.status,
+                              ),
                             ),
                           )
                           .toList()),

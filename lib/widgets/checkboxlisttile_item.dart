@@ -14,26 +14,31 @@ class _CheckBoxListTileItemState extends State<CheckBoxListTileItem> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Checkbox(
-          activeColor: Theme.of(context).primaryColor,
-          value: isChecked,
-          onChanged: (value) {
-            setState(() {
-              isChecked = value;
+    return InkWell(
+      onTap: (){
+        setState(() {
+              isChecked = !isChecked;
             });
-          },
-        ),
-        Text(
-          widget.title,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12
+      },
+          child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Checkbox(
+            activeColor: Theme.of(context).primaryColor,
+            value: isChecked,
+            onChanged: (value) {
+              
+            },
           ),
-        ),
-      ],
+          Text(
+            widget.title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

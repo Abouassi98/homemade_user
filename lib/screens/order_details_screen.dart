@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:homemade_user/screens/order_following_screen.dart';
 import 'package:homemade_user/screens/order_summary_screen.dart';
@@ -28,7 +30,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             size: 30,
             // color: Theme.of(context).primaryColor,
           ),
-          onPressed: () {},
+          onPressed: () { Navigator.of(context).pop();},
         ),
         title: Text('تفاصيل الطلب'),
         centerTitle: true,
@@ -41,7 +43,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
             onPressed: () {
               Navigator.of(context).push(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => OrdersScreen()));
+                  pageBuilder: (_, __, ___) => OrdersScreen(hideOptions: false,)));
             },
           ),
         ],
@@ -81,7 +83,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           ),
                           subtitle: Text(
                             'إضافات',
-                            style: TextStyle(color: Theme.of(context).primaryColor),
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
                           ),
                           trailing: Text(
                             '40 ريال',
@@ -252,7 +255,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   ),
                   Config.buildContainer(
                     mediaQuery: mediaQuery,
-                    height: 0.42,
+                    height: Platform.isIOS ? 0.49 : 0.42,
                     child: Padding(
                       padding: EdgeInsets.all(14),
                       child: Column(
@@ -268,7 +271,23 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           SizedBox(
                             height: mediaQuery.height * 0.02,
                           ),
-
+                          RadioListTile(
+                            activeColor: Theme.of(context).primaryColor,
+                            value: 'رصيد المحفظة',
+                            groupValue: payMethod,
+                            onChanged: (value) {
+                              setState(() {
+                                payMethod = value;
+                              });
+                            },
+                            title: Text(
+                              'رصيد المحفظة',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
                           RadioListTile(
                             activeColor: Theme.of(context).primaryColor,
                             value: 'Visa / Master Card',
@@ -304,24 +323,25 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                               ),
                             ),
                           ),
-
-                          RadioListTile(
-                            activeColor: Theme.of(context).primaryColor,
-                            value: 'رصيد المحفظة',
-                            groupValue: payMethod,
-                            onChanged: (value) {
-                              setState(() {
-                                payMethod = value;
-                              });
-                            },
-                            title: Text(
-                              'رصيد المحفظة',
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 12,
+                          if (Platform.isIOS)
+                            RadioListTile(
+                              activeColor: Theme.of(context).primaryColor,
+                              value: ' Apple Pay',
+                              groupValue: payMethod,
+                              onChanged: (value) {
+                                setState(() {
+                                  payMethod = value;
+                                });
+                              },
+                              title: Text(
+                                ' Apple Pay',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
-                          ),
+
                           // Row(
                           //   children: [
                           //     Container(
@@ -347,46 +367,44 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   SizedBox(
                     height: mediaQuery.height * 0.15,
                   ),
-                 
-                                 ],
+                ],
               ),
             ),
           ),
-       Positioned(
-bottom: mediaQuery.height*0.01,
-left:mediaQuery.width*0.02 ,
-right:mediaQuery.width*0.02  ,
-         child:  Center(
-                    child: Container(
-                      width: mediaQuery.width * 0.4,
-                      child: RaisedButton(
-                        elevation: 8,
-                        color: Color(0xffF4AC94),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Text(
-                          'إتمام عملية الدفع',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 12,
-                          ),
-                        ),
-                        onPressed: payMethod.isEmpty
-                            ? null
-                            : () {
-                                Navigator.of(context).push(
-                                  PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) =>
-                                        OrderFollowingScreen(),
-                                  ),
-                                );
-                              },
-                      ),
+          Positioned(
+            bottom: mediaQuery.height * 0.01,
+            left: mediaQuery.width * 0.02,
+            right: mediaQuery.width * 0.02,
+            child: Center(
+              child: Container(
+                width: mediaQuery.width * 0.4,
+                child: RaisedButton(
+                  elevation: 8,
+                  color: Color(0xffF4AC94),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Text(
+                    'إتمام عملية الدفع',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 12,
                     ),
                   ),
-       ),
-       
+                  onPressed: payMethod.isEmpty
+                      ? null
+                      : () {
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder: (_, __, ___) =>
+                                  OrderFollowingScreen(),
+                            ),
+                          );
+                        },
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

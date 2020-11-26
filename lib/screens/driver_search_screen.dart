@@ -46,7 +46,7 @@ class _DriverSearchScreenState extends State<DriverSearchScreen> {
         latitude: 0.0,
         longitude: 0.0),
   ];
-  
+
   Future<bool> _onBackPressed() {
     return showDialog(
           barrierDismissible: false,
@@ -61,7 +61,12 @@ class _DriverSearchScreenState extends State<DriverSearchScreen> {
                 ),
                 color: Theme.of(context).primaryColor,
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text("متابعة الطلب"),
+                child: Text(
+                  "متابعة الطلب",
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
               ),
               SizedBox(height: 16),
               new RaisedButton(
@@ -70,7 +75,12 @@ class _DriverSearchScreenState extends State<DriverSearchScreen> {
                 ),
                 color: Color(0xffD66D50),
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text("الخروج"),
+                child: Text(
+                  "الخروج",
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
               ),
             ],
           ),
@@ -87,8 +97,7 @@ class _DriverSearchScreenState extends State<DriverSearchScreen> {
         bottomNavigationBar: Config.buildBottomNavigationBar(
           mediaQuery: mediaQuery,
           context: context,
-        isSignup: true,
-        
+          isSignup: true,
         ),
         appBar: AppBar(
           title: Text('البحث عن مندوبين'),
@@ -133,9 +142,12 @@ class _DriverSearchScreenState extends State<DriverSearchScreen> {
                         slideDirection: SlideDirection.Down,
                         tightLabel: true,
                         onDone: () {
-                         
-                         Fluttertoast.showToast(msg: 'تم إالغاء الطلب, يرجى الإعادة مرة أخرى');
-                         Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder:(_,__,___)=>HomeScreen()),);
+                          Fluttertoast.showToast(
+                              msg: 'تم إالغاء الطلب, يرجى الإعادة مرة أخرى');
+                          Navigator.of(context).pushReplacement(
+                            PageRouteBuilder(
+                                pageBuilder: (_, __, ___) => HomeScreen()),
+                          );
                         },
                         separator: ":",
                         textStyle: TextStyle(
@@ -181,9 +193,11 @@ class _DriverSearchScreenState extends State<DriverSearchScreen> {
       ),
     );
   }
-@override
+
+  @override
   void dispose() {
-  
+    Navigator.of(context).deactivate();
+
     super.dispose();
   }
 }
